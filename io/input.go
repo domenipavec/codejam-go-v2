@@ -1,24 +1,25 @@
 package io
 
 import (
-	"bufio"
-	"io"
 	"log"
 	"strconv"
 )
 
-type Input struct {
-	scanner *bufio.Scanner
+type InputProvider interface {
+	Scan() bool
+	Text() string
+	Bytes() []byte
+	Err() error
 }
 
-func newInput(r io.Reader) *Input {
-	input := &Input{
-		scanner: bufio.NewScanner(r),
+type Input struct {
+	scanner InputProvider
+}
+
+func newInput(ip InputProvider) *Input {
+	return &Input{
+		scanner: ip,
 	}
-
-	input.scanner.Split(bufio.ScanWords)
-
-	return input
 }
 
 func (i *Input) Scan() {
