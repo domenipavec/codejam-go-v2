@@ -56,3 +56,11 @@ func (i *Input) Digits() []int {
 	}
 	return ints
 }
+
+func (i *Input) SliceInt(n int) []int {
+	ints := make([]int, 0, n)
+	for j := 0; j < n; j++ {
+		ints = append(ints, i.Int())
+	}
+	return ints
+}
