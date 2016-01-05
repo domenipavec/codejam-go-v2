@@ -2,6 +2,7 @@ package io
 
 import (
 	"bufio"
+	"bytes"
 	"log"
 	"os"
 	"strings"
@@ -28,6 +29,27 @@ func TestCases(f TestCaseFunc) {
 
 func (parser *Parser) ParseFile(inputFn string) {
 	outputFn := strings.TrimSuffix(inputFn, ".in") + ".out"
+	correctFn := strings.TrimSuffix(inputFn, ".in") + ".correct"
+
+	outputBuffer := &bytes.Buffer{}
+
+	input := NewBufferedInput(parser.inputData(inputFn))
+	output := newOutput(outputBuffer)
+
+	for i := 1; i <= input.T; i++ {
+		parser.f(input.GetInput(i), output)
+		output.flush(i)
+	}
+
+	if _, err := os.Stat(correctFn); err == nil {
+		CompareOutput(correctFn, bytes.NewReader(outputBuffer.Bytes()), input)
+	}
+
+	parser.writeOutput(outputFn, outputBuffer.Bytes())
+}
+
+func (parser *Parser) inputData(inputFn string) []string {
+	data := []string{}
 
 	inputF, err := os.Open(inputFn)
 	if err != nil {
@@ -35,21 +57,25 @@ func (parser *Parser) ParseFile(inputFn string) {
 	}
 	defer inputF.Close()
 
+	scanner := bufio.NewScanner(inputF)
+	scanner.Split(bufio.ScanWords)
+
+	for scanner.Scan() {
+		data = append(data, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatalln("Error reading input:", err)
+	}
+
+	return data
+}
+
+func (parser *Parser) writeOutput(outputFn string, data []byte) {
 	outputF, err := os.Create(outputFn)
 	if err != nil {
 		log.Fatalln("Error creating output file:", err)
 	}
 	defer outputF.Close()
 
-	inputScanner := bufio.NewScanner(inputF)
-	inputScanner.Split(bufio.ScanWords)
-
-	input := newInput(inputScanner)
-	output := newOutput(outputF)
-
-	T := input.Int()
-	for i := 1; i <= T; i++ {
-		parser.f(input, output)
-		output.flush(i)
-	}
+	outputF.Write(data)
 }
