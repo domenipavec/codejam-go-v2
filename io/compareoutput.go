@@ -42,9 +42,9 @@ func CompareOutput(correctFn string, output io.Reader, input *BufferedInput) {
 	}
 
 	if len(msgs) > 0 {
-		fmt.Printf("%d differences comapred with %s:\n", len(msgs), correctFn)
+		log.Printf("%d differences comapred with %s:\n", len(msgs), correctFn)
 		for _, msg := range msgs {
-			fmt.Println(msg[:integer.Min(len(msg), 100)])
+			log.Println(msg[:integer.Min(len(msg), 100)])
 		}
 	}
 }
