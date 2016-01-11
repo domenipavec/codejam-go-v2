@@ -65,3 +65,11 @@ func (i *Input) SliceInt(n int) []int {
 	}
 	return ints
 }
+
+func (i *Input) GridInt(y, x int) [][]int {
+	grid := make([][]int, 0, y)
+	for j := 0; j < y; j++ {
+		grid = append(grid, i.SliceInt(x))
+	}
+	return grid
+}
