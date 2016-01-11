@@ -3,6 +3,7 @@ package io
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -44,15 +45,31 @@ func (parser *Parser) SetFn(inputFn string) {
 	parser.correctFn = baseFn + ".correct"
 }
 
+func (parser *Parser) formatDuration(d int64) string {
+	var i int
+	df := float64(d)
+	units := []string{"ns", "us", "ms", "s"}
+	for i = 0; df >= 1000; i++ {
+		df /= 1000
+		if i >= 3 {
+			break
+		}
+	}
+	res := fmt.Sprintf("%.2f%s", df, units[i])
+	return res
+}
+
 func (parser *Parser) ParseFile() {
 	outputBuffer := &bytes.Buffer{}
 
 	parser.inputData()
 	parser.output = newOutput(outputBuffer)
 
+	startTime := time.Now().UnixNano()
 	for i := 1; i <= parser.input.T; i++ {
 		parser.runTestCase(i)
 	}
+	log.Println("Total time:", parser.formatDuration(time.Now().UnixNano()-startTime))
 
 	if _, err := os.Stat(parser.correctFn); err == nil {
 		CompareOutput(parser.correctFn, bytes.NewReader(outputBuffer.Bytes()), parser.input)
