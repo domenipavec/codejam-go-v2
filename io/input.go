@@ -46,6 +46,14 @@ func (i *Input) Int() int {
 	return n
 }
 
+func (i *Input) Float() float64 {
+	f, err := strconv.ParseFloat(i.String(), 64)
+	if err != nil {
+		log.Fatalln("Error scanning for float:", err)
+	}
+	return f
+}
+
 func (i *Input) Digits() []int {
 	str := i.String()
 	ints := make([]int, 0, len(str))
@@ -70,6 +78,22 @@ func (i *Input) GridInt(y, x int) [][]int {
 	grid := make([][]int, 0, y)
 	for j := 0; j < y; j++ {
 		grid = append(grid, i.SliceInt(x))
+	}
+	return grid
+}
+
+func (i *Input) SliceFloat(n int) []float64 {
+	floats := make([]float64, 0, n)
+	for j := 0; j < n; j++ {
+		floats = append(floats, i.Float())
+	}
+	return floats
+}
+
+func (i *Input) GridFloat(y, x int) [][]float64 {
+	grid := make([][]float64, 0, y)
+	for j := 0; j < y; j++ {
+		grid = append(grid, i.SliceFloat(x))
 	}
 	return grid
 }
