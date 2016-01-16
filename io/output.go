@@ -47,3 +47,9 @@ func (o *Output) AssertByteCount(a byte, count int) {
 		log.Fatalf("AssertByteCount: byte: %q difference: %d", string(a), count*-1)
 	}
 }
+
+func (o *Output) AssertCount(count int) {
+	if o.output.Len() != count {
+		log.Fatalln("AssertCount:", count)
+	}
+}
