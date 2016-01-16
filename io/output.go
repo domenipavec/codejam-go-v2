@@ -30,6 +30,8 @@ func (o *Output) Printf(format string, a ...interface{}) {
 func (o *Output) flush(caseN int) {
 	fmt.Fprintf(o.w, "Case #%d: ", caseN)
 	o.w.Write(o.output.Bytes())
-	o.w.Write([]byte{'\n'})
+	if o.output.Bytes()[o.output.Len()-1] != '\n' {
+		o.w.Write([]byte{'\n'})
+	}
 	o.output.Reset()
 }
