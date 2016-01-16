@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"unicode"
 )
 
 type Output struct {
@@ -29,7 +30,13 @@ func (o *Output) Printf(format string, a ...interface{}) {
 }
 
 func (o *Output) flush(caseN int) {
-	fmt.Fprintf(o.w, "Case #%d: ", caseN)
+	if o.output.Len() <= 0 {
+		log.Fatalf("No output for case #%d", caseN)
+	}
+	fmt.Fprintf(o.w, "Case #%d:", caseN)
+	if !unicode.In(rune(o.output.Bytes()[0]), unicode.White_Space) {
+		o.w.Write([]byte{' '})
+	}
 	o.w.Write(o.output.Bytes())
 	if o.output.Bytes()[o.output.Len()-1] != '\n' {
 		o.w.Write([]byte{'\n'})
