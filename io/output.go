@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 )
 
 type Output struct {
@@ -34,4 +35,15 @@ func (o *Output) flush(caseN int) {
 		o.w.Write([]byte{'\n'})
 	}
 	o.output.Reset()
+}
+
+func (o *Output) AssertByteCount(a byte, count int) {
+	for _, b := range o.output.Bytes() {
+		if a == b {
+			count--
+		}
+	}
+	if count != 0 {
+		log.Fatalf("AssertByteCount: byte: %q difference: %d", string(a), count*-1)
+	}
 }
