@@ -83,14 +83,15 @@ func (parser *Parser) runTestCase(i int) {
 	doneChan := make(chan bool)
 
 	go func() {
+		parser.output.init(parser.input.InputProviders[i-1], i)
 		parser.f(parser.input.GetInput(i), parser.output)
-		parser.output.flush(i)
+		parser.output.flush()
 		doneChan <- true
 	}()
 
 	select {
 	case <-warningTimer.C:
-		log.Printf("Long calculation #%d, input: %v\n", i, parser.input.InputProviders[i-1].Data)
+		parser.output.Debug("Long calculation")
 		<-doneChan
 	case <-doneChan:
 	}
