@@ -13,9 +13,10 @@ import (
 type TestCaseFunc func(*Input, *Output)
 
 type Parser struct {
-	f      TestCaseFunc
-	input  *BufferedInput
-	output *Output
+	f             TestCaseFunc
+	input         *BufferedInput
+	output        *Output
+	compareOutput *CompareOutput
 
 	inputFn   string
 	outputFn  string
@@ -65,15 +66,16 @@ func (parser *Parser) ParseFile() {
 	parser.inputData()
 	parser.output = newOutput(outputBuffer)
 
+	parser.compareOutput = nil
+	if _, err := os.Stat(parser.correctFn); err == nil {
+		parser.compareOutput = NewCompareOutput(parser.correctFn)
+	}
+
 	startTime := time.Now().UnixNano()
 	for i := 1; i <= parser.input.T; i++ {
 		parser.runTestCase(i)
 	}
 	log.Println("Total time:", parser.formatDuration(time.Now().UnixNano()-startTime))
-
-	if _, err := os.Stat(parser.correctFn); err == nil {
-		CompareOutput(parser.correctFn, bytes.NewReader(outputBuffer.Bytes()), parser.input)
-	}
 
 	parser.writeOutput(outputBuffer.Bytes())
 }
@@ -85,6 +87,11 @@ func (parser *Parser) runTestCase(i int) {
 	go func() {
 		parser.output.init(parser.input.InputProviders[i-1], i)
 		parser.f(parser.input.GetInput(i), parser.output)
+
+		if parser.compareOutput != nil && parser.compareOutput.HasOutput(i) {
+			parser.output.AssertEqual(string(parser.compareOutput.GetOutput(i)))
+		}
+
 		parser.output.flush()
 		doneChan <- true
 	}()

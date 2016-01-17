@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"strings"
 	"unicode"
 )
 
@@ -53,7 +54,7 @@ func (o *Output) Debugf(format string, a ...interface{}) {
 }
 
 func (o *Output) DebugCase() {
-	log.Printf("Case #%d, input: %v, output: %s\n", o.caseN, o.bip.Data, string(o.output.Bytes()))
+	log.Printf("Case #%d, input: %v, output: %q\n", o.caseN, o.bip.Data, string(o.output.Bytes()))
 }
 
 func (o *Output) init(bip *bufferedInputProvider, caseN int) {
@@ -106,5 +107,11 @@ func (o *Output) AssertByteCount(a byte, count int, fatal ...bool) {
 func (o *Output) AssertCount(count int, fatal ...bool) {
 	if o.output.Len() != count {
 		o.assertOutput(fatal, "AssertCount: ", count)
+	}
+}
+
+func (o *Output) AssertEqual(data string, fatal ...bool) {
+	if strings.TrimSpace(string(o.output.Bytes())) != strings.TrimSpace(data) {
+		o.assertOutputf(fatal, "Output should be: %q", data)
 	}
 }
