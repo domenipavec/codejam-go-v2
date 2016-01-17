@@ -2,7 +2,6 @@ package io
 
 import (
 	"bufio"
-	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -61,10 +60,14 @@ func (parser *Parser) formatDuration(d int64) string {
 }
 
 func (parser *Parser) ParseFile() {
-	outputBuffer := &bytes.Buffer{}
+	outputF, err := os.Create(parser.outputFn)
+	if err != nil {
+		log.Fatalln("Error creating output file:", err)
+	}
+	defer outputF.Close()
 
 	parser.inputData()
-	parser.output = newOutput(outputBuffer)
+	parser.output = newOutput(outputF)
 
 	parser.compareOutput = nil
 	if _, err := os.Stat(parser.correctFn); err == nil {
@@ -76,8 +79,6 @@ func (parser *Parser) ParseFile() {
 		parser.runTestCase(i)
 	}
 	log.Println("Total time:", parser.formatDuration(time.Now().UnixNano()-startTime))
-
-	parser.writeOutput(outputBuffer.Bytes())
 }
 
 func (parser *Parser) runTestCase(i int) {
@@ -124,14 +125,4 @@ func (parser *Parser) inputData() {
 	}
 
 	parser.input = NewBufferedInput(data)
-}
-
-func (parser *Parser) writeOutput(data []byte) {
-	outputF, err := os.Create(parser.outputFn)
-	if err != nil {
-		log.Fatalln("Error creating output file:", err)
-	}
-	defer outputF.Close()
-
-	outputF.Write(data)
 }
