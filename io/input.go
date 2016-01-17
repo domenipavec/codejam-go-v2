@@ -14,6 +14,7 @@ type InputProvider interface {
 
 type Input struct {
 	scanner InputProvider
+	current []string
 }
 
 func newInput(ip InputProvider) *Input {
@@ -22,10 +23,19 @@ func newInput(ip InputProvider) *Input {
 	}
 }
 
+func (i *Input) init() {
+	i.current = i.current[:0]
+}
+
+func (i *Input) currentCase() []string {
+	return i.current
+}
+
 func (i *Input) Scan() {
 	if ok := i.scanner.Scan(); !ok {
 		log.Fatalln("Error scanning input:", i.scanner.Err())
 	}
+	i.current = append(i.current, i.scanner.Text())
 }
 
 func (i *Input) String() string {

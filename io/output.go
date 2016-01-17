@@ -13,7 +13,7 @@ type Output struct {
 	w io.Writer
 
 	caseN int
-	bip   *bufferedInputProvider
+	input *Input
 
 	output *bytes.Buffer
 }
@@ -54,11 +54,11 @@ func (o *Output) Debugf(format string, a ...interface{}) {
 }
 
 func (o *Output) DebugCase() {
-	log.Printf("Case #%d, input: %v, output: %q\n", o.caseN, o.bip.Data, string(o.output.Bytes()))
+	log.Printf("Case #%d, input: %v, output: %q\n", o.caseN, o.input.currentCase(), string(o.output.Bytes()))
 }
 
-func (o *Output) init(bip *bufferedInputProvider, caseN int) {
-	o.bip = bip
+func (o *Output) init(input *Input, caseN int) {
+	o.input = input
 	o.caseN = caseN
 }
 

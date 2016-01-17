@@ -13,7 +13,7 @@ type TestCaseFunc func(*Input, *Output)
 
 type Parser struct {
 	f             TestCaseFunc
-	input         *BufferedInput
+	input         *Input
 	output        *Output
 	compareOutput *CompareOutput
 
@@ -66,16 +66,27 @@ func (parser *Parser) ParseFile() {
 	}
 	defer outputF.Close()
 
-	parser.inputData()
+	inputF, err := os.Open(parser.inputFn)
+	if err != nil {
+		log.Fatalln("Error opening input file:", err)
+	}
+	defer inputF.Close()
+
+	scanner := bufio.NewScanner(inputF)
+	scanner.Split(bufio.ScanWords)
+
 	parser.output = newOutput(outputF)
+	parser.input = newInput(scanner)
 
 	parser.compareOutput = nil
 	if _, err := os.Stat(parser.correctFn); err == nil {
 		parser.compareOutput = NewCompareOutput(parser.correctFn)
 	}
 
+	T := parser.input.Int()
+
 	startTime := time.Now().UnixNano()
-	for i := 1; i <= parser.input.T; i++ {
+	for i := 1; i <= T; i++ {
 		parser.runTestCase(i)
 	}
 	log.Println("Total time:", parser.formatDuration(time.Now().UnixNano()-startTime))
@@ -86,8 +97,10 @@ func (parser *Parser) runTestCase(i int) {
 	doneChan := make(chan bool)
 
 	go func() {
-		parser.output.init(parser.input.InputProviders[i-1], i)
-		parser.f(parser.input.GetInput(i), parser.output)
+		parser.output.init(parser.input, i)
+		parser.input.init()
+
+		parser.f(parser.input, parser.output)
 
 		if parser.compareOutput != nil && parser.compareOutput.HasOutput(i) {
 			parser.output.AssertEqual(string(parser.compareOutput.GetOutput(i)))
@@ -103,26 +116,4 @@ func (parser *Parser) runTestCase(i int) {
 		<-doneChan
 	case <-doneChan:
 	}
-}
-
-func (parser *Parser) inputData() {
-	data := []string{}
-
-	inputF, err := os.Open(parser.inputFn)
-	if err != nil {
-		log.Fatalln("Error opening input file:", err)
-	}
-	defer inputF.Close()
-
-	scanner := bufio.NewScanner(inputF)
-	scanner.Split(bufio.ScanWords)
-
-	for scanner.Scan() {
-		data = append(data, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatalln("Error reading input:", err)
-	}
-
-	parser.input = NewBufferedInput(data)
 }
