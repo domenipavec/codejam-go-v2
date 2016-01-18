@@ -107,3 +107,11 @@ func (i *Input) GridFloat(y, x int) [][]float64 {
 	}
 	return grid
 }
+
+func (i *Input) SliceString(n int) []string {
+	strs := make([]string, 0, n)
+	for j := 0; j < n; j++ {
+		strs = append(strs, i.String())
+	}
+	return strs
+}

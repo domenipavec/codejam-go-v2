@@ -15,6 +15,7 @@ Reads whitespace separated stuff from input file
 - **input.GridInt(y, x)** - *y* rows and *x* cols to [][]int, first is row index
 - **input.SliceFloat(n)** - *n* floats to []float64
 - **input.GridFloat(y, x)** - *y* rows and *x* cols to [][]float64, first is row index
+- **input.SliceString(n)** - *n* strings to []string
 
 
 ## Output
