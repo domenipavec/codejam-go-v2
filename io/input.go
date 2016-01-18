@@ -2,6 +2,7 @@ package io
 
 import (
 	"log"
+	"math/big"
 	"strconv"
 )
 
@@ -62,6 +63,17 @@ func (i *Input) Float() float64 {
 		log.Fatalln("Error scanning for float:", err)
 	}
 	return f
+}
+
+func (i *Input) BigInt() *big.Int {
+	n := &big.Int{}
+	str := i.String()
+
+	n, ok := n.SetString(str, 10)
+	if !ok {
+		log.Fatalln("Error scanning for big int:", str)
+	}
+	return n
 }
 
 func (i *Input) Digits() []int {

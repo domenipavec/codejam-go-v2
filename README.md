@@ -10,6 +10,7 @@ Reads whitespace separated stuff from input file
 - **input.Bytes()** - []byte input
 - **input.Int()** - int input (64-bit usually)
 - **input.Float()** - float64 input
+- **input.BigInt()** - \*big.Int input
 - **input.Digits()** - split digits without space to []int slice
 - **input.SliceInt(n)** - *n* ints to []int
 - **input.GridInt(y, x)** - *y* rows and *x* cols to [][]int, first is row index
