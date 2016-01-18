@@ -60,17 +60,17 @@ func (parser *Parser) formatDuration(d int64) string {
 }
 
 func (parser *Parser) ParseFile() {
-	outputF, err := os.Create(parser.outputFn)
-	if err != nil {
-		log.Fatalln("Error creating output file:", err)
-	}
-	defer outputF.Close()
-
 	inputF, err := os.Open(parser.inputFn)
 	if err != nil {
 		log.Fatalln("Error opening input file:", err)
 	}
 	defer inputF.Close()
+
+	outputF, err := os.Create(parser.outputFn)
+	if err != nil {
+		log.Fatalln("Error creating output file:", err)
+	}
+	defer outputF.Close()
 
 	scanner := bufio.NewScanner(inputF)
 	scanner.Split(bufio.ScanWords)
