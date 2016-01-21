@@ -2,7 +2,7 @@
 
 Some helper stuff for codejam competition in go. See example.
 
-## Input
+## input
 
 Reads whitespace separated stuff from input file
 
@@ -19,7 +19,7 @@ Reads whitespace separated stuff from input file
 - **input.SliceString(n)** - *n* strings to []string
 
 
-## Output
+## output
 
 Writes output after **Case #n:**, beginning space and trailing newline are provided if necessary.
 
@@ -38,3 +38,11 @@ Testing asserts:
 (all asserts have optional fatal bool parameter, that can be set to terminate if mistake is encountered)
 - **output.AssertByteCount(byte, count, fatal)** - check if output has *count* number of *byte*-s
 - **output.AssertCount(count, fatal)** - check if output has *count* bytes
+
+## integer
+
+Useful function for integers
+
+- **integer.Min(...int)** - returns minimal from the given ints
+- **integer.Max(...int)** - returns maximal from the given ints
+- **integer.Ceil(a, b)** - divides a by b and rounds the result up
