@@ -20,6 +20,13 @@ func Max(as ...int) int {
 	return max
 }
 
+func Abs(a int) int {
+	if a < 0 {
+		return -1 * a
+	}
+	return a
+}
+
 func Ceil(a, b int) int {
 	return ((a - 1) / b) + 1
 }

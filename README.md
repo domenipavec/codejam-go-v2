@@ -45,4 +45,5 @@ Useful function for integers
 
 - **integer.Min(...int)** - returns minimal from the given ints
 - **integer.Max(...int)** - returns maximal from the given ints
+- **integer.Abs(a)** - returns absolute value of a
 - **integer.Ceil(a, b)** - divides a by b and rounds the result up
