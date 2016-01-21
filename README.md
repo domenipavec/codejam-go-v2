@@ -1,4 +1,4 @@
-# codejam-go
+# codejam-go [![Build Status](https://travis-ci.org/matematik7/codejam-go.svg?branch=master)](https://travis-ci.org/matematik7/codejam-go)
 
 Some helper stuff for codejam competition in go. See example.
 
