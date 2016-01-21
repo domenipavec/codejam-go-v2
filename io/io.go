@@ -80,7 +80,13 @@ func (parser *Parser) ParseFile() {
 
 	parser.compareOutput = nil
 	if _, err := os.Stat(parser.correctFn); err == nil {
-		parser.compareOutput = NewCompareOutput(parser.correctFn)
+		correctF, err := os.Open(parser.correctFn)
+		if err != nil {
+			log.Fatalln("Error opening correct file:", err)
+		}
+		defer correctF.Close()
+
+		parser.compareOutput = NewCompareOutput(correctF)
 	}
 
 	T := parser.input.Int()

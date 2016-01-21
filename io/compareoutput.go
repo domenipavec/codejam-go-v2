@@ -2,6 +2,7 @@ package io
 
 import (
 	"bytes"
+	"io"
 	"io/ioutil"
 	"log"
 	"strconv"
@@ -11,12 +12,12 @@ type CompareOutput struct {
 	outputs map[int][]byte
 }
 
-func NewCompareOutput(correctFn string) *CompareOutput {
+func NewCompareOutput(correctF io.Reader) *CompareOutput {
 	co := &CompareOutput{
 		outputs: make(map[int][]byte),
 	}
 
-	correctData, err := ioutil.ReadFile(correctFn)
+	correctData, err := ioutil.ReadAll(correctF)
 	if err != nil {
 		log.Fatalln("Error opening correct file:", err)
 	}
