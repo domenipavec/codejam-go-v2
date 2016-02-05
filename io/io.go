@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	"runtime/pprof"
 	"strings"
 	"time"
 )
@@ -20,6 +22,7 @@ type Parser struct {
 	inputFn   string
 	outputFn  string
 	correctFn string
+	profileFn string
 }
 
 func TestCases(f TestCaseFunc) {
@@ -43,6 +46,7 @@ func (parser *Parser) SetFn(inputFn string) {
 	baseFn := strings.TrimSuffix(inputFn, ".in")
 	parser.outputFn = baseFn + ".out"
 	parser.correctFn = baseFn + ".correct"
+	parser.profileFn = baseFn + ".prof"
 }
 
 func (parser *Parser) formatDuration(d int64) string {
@@ -100,6 +104,9 @@ func (parser *Parser) ParseFile() {
 
 func (parser *Parser) runTestCase(i int) {
 	warningTimer := time.NewTimer(500 * time.Millisecond)
+	startProfileTimer := time.NewTimer(1 * time.Second)
+	stopProfileTimer := time.NewTimer(10 * time.Second)
+
 	doneChan := make(chan bool)
 
 	go func() {
@@ -116,10 +123,33 @@ func (parser *Parser) runTestCase(i int) {
 		doneChan <- true
 	}()
 
-	select {
-	case <-warningTimer.C:
-		parser.output.Debug("Long calculation")
-		<-doneChan
-	case <-doneChan:
+	var f *os.File
+	var err error
+
+loop:
+	for {
+		select {
+		case <-warningTimer.C:
+			parser.output.Debug("Long calculation")
+		case <-startProfileTimer.C:
+			f, err = os.Create(parser.profileFn)
+			if err != nil {
+				log.Fatalln("Error opening profile file:", err)
+			}
+			pprof.StartCPUProfile(f)
+		case <-stopProfileTimer.C:
+			pprof.StopCPUProfile()
+			f = nil
+			out, err := exec.Command("go", "tool", "pprof", "-top", os.Args[0], parser.profileFn).CombinedOutput()
+			if err != nil {
+				log.Fatalln("Error running profile tool:", err)
+			}
+			parser.output.Debug("CPUProfile:", string(out))
+		case <-doneChan:
+			break loop
+		}
+	}
+	if f != nil {
+		pprof.StopCPUProfile()
 	}
 }
