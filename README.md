@@ -59,6 +59,7 @@ Useful function for integers
 Multiset implementation for integers (using map[int]int)
 
 - **ms := integer.NewMultiSet(...int)** - construct MultiSet from given ints
+- **ms.Copy()** - returns independent copy of MultiSet
 - **ms.Contains(a)** - returns true if a is in MultiSet
 - **ms.ContainsAll(...int)** - returns true if all given ints are in MultiSet
 - **ms.ContainsAny(...int)** - returns true if any of given ints is in MultiSet

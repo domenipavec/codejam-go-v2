@@ -10,6 +10,14 @@ func NewMultiSet(as ...int) MultiSet {
 	return ms
 }
 
+func (ms MultiSet) Copy() MultiSet {
+	copyMs := MultiSet(make(map[int]int))
+	for k, v := range ms {
+		copyMs[k] = v
+	}
+	return copyMs
+}
+
 func (ms MultiSet) Contains(a int) bool {
 	return ms[a] > 0
 }
