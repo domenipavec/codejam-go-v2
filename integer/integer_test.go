@@ -41,3 +41,10 @@ func TestCeil(t *testing.T) {
 	assert.Equal(t, 2, Ceil(10, 5))
 	assert.Equal(t, 3, Ceil(11, 5))
 }
+
+func TestRange(t *testing.T) {
+	assert.Equal(t, []int{0, 1, 2}, Range(3))
+	assert.Equal(t, []int{2, 3, 4, 5, 6}, Range(2, 7))
+	assert.Equal(t, []int{3, 5, 7}, Range(3, 8, 2))
+	assert.Equal(t, []int{5, 10, 15, 20, 25}, Range(5, 30, 5))
+}
