@@ -2,6 +2,7 @@
 
 Some helper stuff for codejam competition in go. See example.
 
+
 ## input
 
 Reads whitespace separated stuff from input file
@@ -39,6 +40,7 @@ Testing asserts:
 - **output.AssertByteCount(byte, count, fatal)** - check if output has *count* number of *byte*-s
 - **output.AssertCount(count, fatal)** - check if output has *count* bytes
 
+
 ## integer
 
 Useful function for integers
@@ -50,3 +52,19 @@ Useful function for integers
 - **integer.Range(max)** - python style range, return slice of ints from *0* to *max-1*
 - **integer.Range(min,max)** - python style range, return slice of ints from *min* to *max-1*
 - **integer.Range(min,max,step)** - python style range, return slice of ints from *min* to *max-1* with step spacing
+
+### integer.MultiSet
+
+Multiset implementation for integers (using map[int]int)
+
+- **ms := integer.NewMultiSet(...int)** - construct MultiSet from given ints
+- **ms.Contains(a)** - returns true if a is in MultiSet
+- **ms.ContainsAll(...int)** - returns true if all given ints are in MultiSet
+- **ms.ContainsAny(...int)** - returns true if any of given ints is in MultiSet
+- **ms.Len()** - returns number of elements in MultiSet (this is O(n), where n is number of different elements)
+- **ms.Count(a)** - returns number of a's in MultiSet
+- **ms.Insert(...int)** - insert all given ints in MultiSet
+- **ms.InsertN(a, n)** - insert n a's in MultiSet
+- **ms.RemoveOne(...int)** - remove one of each given int from MultiSet
+- **ms.RemoveAll(...int)** - remove all of each given int from MultiSet
+- **ms.Clear()** - remove all elements from MultiSet
