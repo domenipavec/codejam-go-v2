@@ -145,6 +145,11 @@ loop:
 				log.Fatalln("Error running profile tool:", err)
 			}
 			parser.output.Debug("CPUProfile:", string(out))
+
+			err = exec.Command("go", "tool", "pprof", "-web", os.Args[0], parser.profileFn).Start()
+			if err != nil {
+				log.Fatalln("Error running profile tool:", err)
+			}
 		case <-doneChan:
 			break loop
 		}
