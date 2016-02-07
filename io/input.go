@@ -4,6 +4,8 @@ import (
 	"log"
 	"math/big"
 	"strconv"
+
+	"github.com/matematik7/codejam-go/integer"
 )
 
 type InputProvider interface {
@@ -94,6 +96,10 @@ func (i *Input) SliceInt(n int) []int {
 		ints = append(ints, i.Int())
 	}
 	return ints
+}
+
+func (i *Input) MultiSetInt(n int) integer.MultiSet {
+	return integer.NewMultiSet(i.SliceInt(n)...)
 }
 
 func (i *Input) GridInt(y, x int) [][]int {

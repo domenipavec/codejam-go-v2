@@ -60,6 +60,12 @@ func TestSliceInt(t *testing.T) {
 	assert.Equal(t, []int{1, -123, 1000000}, i.SliceInt(3))
 }
 
+func TestMultiSetInt(t *testing.T) {
+	i := initInput("1 -123\n1000000")
+	ms := i.MultiSetInt(3)
+	assert.True(t, ms.ContainsAll(1, -123, 1000000))
+}
+
 func TestGridInt(t *testing.T) {
 	i := initInput("1 2 3\n4 5 6")
 	assert.Equal(t, [][]int{[]int{1, 2, 3}, []int{4, 5, 6}}, i.GridInt(2, 3))
