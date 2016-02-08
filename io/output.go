@@ -16,13 +16,31 @@ type Output struct {
 	input *Input
 
 	output *bytes.Buffer
+
+	periodicPrint chan struct{}
 }
 
 func newOutput(w io.Writer) *Output {
 	return &Output{
-		w:      w,
-		output: &bytes.Buffer{},
+		w:             w,
+		output:        &bytes.Buffer{},
+		periodicPrint: make(chan struct{}, 10),
 	}
+}
+
+func (o *Output) resetPeriodic() {
+	for {
+		select {
+		case <-o.periodicPrint:
+		default:
+			return
+		}
+	}
+}
+
+func (o *Output) triggerPeriodic() {
+	o.resetPeriodic()
+	o.periodicPrint <- struct{}{}
 }
 
 func (o *Output) Print(a ...interface{}) {
@@ -55,6 +73,30 @@ func (o *Output) Debugf(format string, a ...interface{}) {
 
 func (o *Output) DebugCase() {
 	log.Printf("Case #%d, input: %v, output: %q\n", o.caseN, o.input.currentCase(), string(o.output.Bytes()))
+}
+
+func (o *Output) Periodic(a ...interface{}) {
+	select {
+	case <-o.periodicPrint:
+		log.Println(a...)
+	default:
+	}
+}
+
+func (o *Output) PeriodicInt(a int) {
+	select {
+	case <-o.periodicPrint:
+		log.Println(a)
+	default:
+	}
+}
+
+func (o *Output) Periodicf(format string, a ...interface{}) {
+	select {
+	case <-o.periodicPrint:
+		log.Println(a...)
+	default:
+	}
 }
 
 func (o *Output) init(input *Input, caseN int) {

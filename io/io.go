@@ -106,6 +106,7 @@ func (parser *Parser) runTestCase(i int) {
 	warningTimer := time.NewTimer(500 * time.Millisecond)
 	startProfileTimer := time.NewTimer(1 * time.Second)
 	stopProfileTimer := time.NewTimer(10 * time.Second)
+	periodicPrintTicker := time.NewTicker(1 * time.Second)
 
 	doneChan := make(chan bool)
 
@@ -150,10 +151,15 @@ loop:
 			if err != nil {
 				log.Fatalln("Error running profile tool:", err)
 			}
+		case <-periodicPrintTicker.C:
+			parser.output.triggerPeriodic()
 		case <-doneChan:
 			break loop
 		}
 	}
+
+	periodicPrintTicker.Stop()
+	parser.output.resetPeriodic()
 	if f != nil {
 		pprof.StopCPUProfile()
 	}
