@@ -35,6 +35,9 @@ Output to console:
 - **output.Debugf(format, ...interface{})** - first calls *DebugCase()*, then prints with format string
 - **output.Fatal(...interface{})** - same as *Debug()*, but terminates
 - **output.Fatalf(format, ...interface{})** - same as *Debugf*, but terminates
+- **output.Periodic(...interface{})** - prints all only every second, for fast loops, spaces are added between operands when neither is a string
+- **output.Periodicf(...interface{})** - prints with format string only every second, for fast loops
+- **output.PeriodicInt(a)** - prints integer *a* only every second, for very fast loops, avoids memory allocation for interface{}
 
 Testing asserts:
 (all asserts have optional fatal bool parameter, that can be set to terminate if mistake is encountered)
