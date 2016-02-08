@@ -57,6 +57,20 @@ Useful function for integers
 - **integer.Range(min,max)** - python style range, return slice of ints from *min* to *max-1*
 - **integer.Range(min,max,step)** - python style range, return slice of ints from *min* to *max-1* with step spacing
 
+### integer.Set
+
+Set implementation for integers (using map[int]struct{})
+
+- **ms := integer.NewSet(...int)** - construct Set from given ints
+- **ms.Copy()** - returns independent copy of Set
+- **ms.Contains(a)** - returns true if a is in Set
+- **ms.ContainsAll(...int)** - returns true if all given ints are in Set
+- **ms.ContainsAny(...int)** - returns true if any of given ints is in Set
+- **ms.Len()** - returns number of elements in Set
+- **ms.Insert(...int)** - insert all given ints in Set
+- **ms.Remove(...int)** - remove given ints from Set
+- **ms.Clear()** - remove all elements from Set
+
 ### integer.MultiSet
 
 Multiset implementation for integers (using map[int]int)
