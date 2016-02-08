@@ -98,7 +98,7 @@ func (i *Input) SliceInt(n int) []int {
 	return ints
 }
 
-func (i *Input) MultiSetInt(n int) integer.MultiSet {
+func (i *Input) MultiSetInt(n int) *integer.MultiSet {
 	return integer.NewMultiSet(i.SliceInt(n)...)
 }
 

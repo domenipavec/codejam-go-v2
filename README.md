@@ -66,7 +66,7 @@ Multiset implementation for integers (using map[int]int)
 - **ms.Contains(a)** - returns true if a is in MultiSet
 - **ms.ContainsAll(...int)** - returns true if all given ints are in MultiSet
 - **ms.ContainsAny(...int)** - returns true if any of given ints is in MultiSet
-- **ms.Len()** - returns number of elements in MultiSet (this is O(n), where n is number of different elements)
+- **ms.Len()** - returns number of elements in MultiSet
 - **ms.Count(a)** - returns number of a's in MultiSet
 - **ms.Insert(...int)** - insert all given ints in MultiSet
 - **ms.InsertN(a, n)** - insert n a's in MultiSet
