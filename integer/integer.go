@@ -1,6 +1,14 @@
 package integer
 
-import "log"
+import (
+	"log"
+	"math"
+)
+
+const (
+	MAX = math.MaxInt64
+	MIN = math.MinInt64
+)
 
 func Min(as ...int) int {
 	min := as[0]
