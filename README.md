@@ -92,11 +92,12 @@ Multiset implementation for integers (using map[int]int)
 
 ### integer.SliceTuple
 
-SliceTuple is a slice of integer slices that act as tuples ([][]int)
+SliceTuple is a slice of integer slices that act as tuples ([]\*[]int)
 
 - **[]int := integer.Tuple(...int)** - construct tuple from given ints
 - **st := NewSliceTuple(...int)** - construct SliceTuple from given ints, each int its own tuple
 - **st.Copy()** - returns independent copy of SliceTuple
+- **st.Get(int)** - get i-th tuple, please use this as it dereferences the pointer
 - **st.Prepend(...[]int)** - prepend tuple(s) to slice
 - **st.Append(...[]int)** - append tuple(s) to slice
 - **st.Insert(i, ...[]int)** - insert tuple(s) on i-th place

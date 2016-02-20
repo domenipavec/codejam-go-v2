@@ -45,3 +45,30 @@ func BenchmarkLess(b *testing.B) {
 		mht.Less(0, 1)
 	}
 }
+
+func BenchmarkSwapSlices(b *testing.B) {
+	var mht minHeapTupleHelper
+	mht.Push(Tuple(1, 2, 3))
+	mht.Push(Tuple(1, 2, 4))
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		mht.Swap(0, 1)
+	}
+}
+
+func BenchmarkGeneral(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		mht := NewMinHeapTuple(NewSliceTuple(3, 2, 5))
+		_ = mht.Copy()
+
+		mht.Push(Tuple(1))
+		mht.Pop()
+		mht.Min()[0] = 6
+		mht.FixMin()
+
+		mht.Pop()
+		mht.Pop()
+		mht.Pop()
+	}
+}

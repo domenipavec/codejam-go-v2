@@ -2,7 +2,7 @@ package integer
 
 import "sort"
 
-type SliceTuple [][]int
+type SliceTuple []*[]int
 
 func Tuple(a ...int) []int {
 	return a
@@ -16,44 +16,55 @@ func NewSliceTuple(as ...int) SliceTuple {
 	return st
 }
 
-func (st *SliceTuple) Prepend(a ...[]int) {
-	*st = append(a, *st...)
+func (st SliceTuple) Get(i int) []int {
+	return *st[i]
 }
 
-func (st *SliceTuple) Append(a ...[]int) {
-	*st = append(*st, a...)
+func (st *SliceTuple) Prepend(as ...[]int) {
+	for _, a := range as {
+		*st = append([]*[]int{&a}, *st...)
+	}
 }
 
-func (st *SliceTuple) Insert(i int, a ...[]int) {
-	*st = append((*st)[:i], append(a, (*st)[i:]...)...)
+func (st *SliceTuple) Append(as ...[]int) {
+	for _, a := range as {
+		*st = append(*st, &a)
+	}
+}
+
+func (st *SliceTuple) Insert(i int, as ...[]int) {
+	for _, a := range as {
+		*st = append((*st)[:i], append([]*[]int{&a}, (*st)[i:]...)...)
+		i++
+	}
 }
 
 func (st SliceTuple) PrefixConst(a ...int) {
 	for index := range st {
-		st[index] = append(a, st[index]...)
+		*st[index] = append(a, *st[index]...)
 	}
 }
 
 func (st SliceTuple) PrefixIndex() {
 	for index := range st {
-		st[index] = append([]int{index}, st[index]...)
+		*st[index] = append([]int{index}, *st[index]...)
 	}
 }
 
 func (st SliceTuple) PostfixConst(a ...int) {
 	for index := range st {
-		st[index] = append(st[index], a...)
+		*st[index] = append(*st[index], a...)
 	}
 }
 
 func (st SliceTuple) PostfixIndex() {
 	for index := range st {
-		st[index] = append(st[index], index)
+		*st[index] = append(*st[index], index)
 	}
 }
 
 func (st *SliceTuple) Delete(i int) []int {
-	value := (*st)[i]
+	value := *(*st)[i]
 	*st = append((*st)[:i], (*st)[i+1:]...)
 	return value
 }
@@ -67,10 +78,11 @@ func (st *SliceTuple) DeleteLast() []int {
 }
 
 func (st SliceTuple) Copy() SliceTuple {
-	cp := make([][]int, len(st))
+	cp := make([]*[]int, len(st))
 	for index, value := range st {
-		cp[index] = make([]int, len(value))
-		copy(cp[index], value)
+		newValue := make([]int, len(*value))
+		copy(newValue, *value)
+		cp[index] = &newValue
 	}
 	return cp
 }
@@ -93,10 +105,17 @@ func (st SliceTuple) Len() int {
 type SliceTupleAsc SliceTuple
 
 func (sta SliceTupleAsc) Less(i, j int) bool {
-	minlen := Min(len(sta[i]), len(sta[j]))
+	is := *sta[i]
+	js := *sta[j]
+	var minlen int
+	if len(is) < len(js) {
+		minlen = len(is)
+	} else {
+		minlen = len(js)
+	}
 	for k := 0; k < minlen; k++ {
-		if sta[i][k] != sta[j][k] {
-			return sta[i][k] < sta[j][k]
+		if is[k] != js[k] {
+			return is[k] < js[k]
 		}
 	}
 	return false
@@ -111,10 +130,17 @@ func (st SliceTuple) SortAsc() {
 type SliceTupleDesc SliceTuple
 
 func (sta SliceTupleDesc) Less(i, j int) bool {
-	minlen := Min(len(sta[i]), len(sta[j]))
+	is := *sta[i]
+	js := *sta[j]
+	var minlen int
+	if len(is) < len(js) {
+		minlen = len(is)
+	} else {
+		minlen = len(js)
+	}
 	for k := 0; k < minlen; k++ {
-		if sta[i][k] != sta[j][k] {
-			return sta[i][k] > sta[j][k]
+		if is[k] != js[k] {
+			return is[k] > js[k]
 		}
 	}
 	return false

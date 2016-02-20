@@ -5,8 +5,8 @@ import "container/heap"
 type minHeapTupleHelper MinHeapTuple
 
 func (mht minHeapTupleHelper) Less(i, j int) bool {
-	is := mht[i]
-	js := mht[j]
+	is := *mht[i]
+	js := *mht[j]
 	var minlen int
 	if len(is) < len(js) {
 		minlen = len(is)
@@ -24,7 +24,8 @@ func (mht minHeapTupleHelper) Swap(i, j int) { mht[i], mht[j] = mht[j], mht[i] }
 func (mht minHeapTupleHelper) Len() int      { return len(mht) }
 
 func (mht *minHeapTupleHelper) Push(x interface{}) {
-	*mht = append(*mht, x.([]int))
+	v := x.([]int)
+	*mht = append(*mht, &v)
 }
 
 func (mht *minHeapTupleHelper) Pop() interface{} {
@@ -43,7 +44,7 @@ func NewMinHeapTuple(st SliceTuple) MinHeapTuple {
 }
 
 func (mht MinHeapTuple) Min() []int {
-	return mht[0]
+	return *mht[0]
 }
 
 func (mht *MinHeapTuple) FixMin() {
@@ -57,7 +58,7 @@ func (mht *MinHeapTuple) Push(as ...[]int) {
 }
 
 func (mht *MinHeapTuple) Pop() []int {
-	return heap.Pop((*minHeapTupleHelper)(mht)).([]int)
+	return *heap.Pop((*minHeapTupleHelper)(mht)).(*[]int)
 }
 
 func (mht MinHeapTuple) Copy() MinHeapTuple {

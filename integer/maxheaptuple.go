@@ -5,8 +5,8 @@ import "container/heap"
 type maxHeapTupleHelper MaxHeapTuple
 
 func (mht maxHeapTupleHelper) Less(i, j int) bool {
-	is := mht[i]
-	js := mht[j]
+	is := *mht[i]
+	js := *mht[j]
 	var minlen int
 	if len(is) < len(js) {
 		minlen = len(is)
@@ -24,7 +24,8 @@ func (mht maxHeapTupleHelper) Swap(i, j int) { mht[i], mht[j] = mht[j], mht[i] }
 func (mht maxHeapTupleHelper) Len() int      { return len(mht) }
 
 func (mht *maxHeapTupleHelper) Push(x interface{}) {
-	*mht = append(*mht, x.([]int))
+	v := x.([]int)
+	*mht = append(*mht, &v)
 }
 
 func (mht *maxHeapTupleHelper) Pop() interface{} {
@@ -43,7 +44,7 @@ func NewMaxHeapTuple(st SliceTuple) MaxHeapTuple {
 }
 
 func (mht MaxHeapTuple) Max() []int {
-	return mht[0]
+	return *mht[0]
 }
 
 func (mht *MaxHeapTuple) FixMax() {
@@ -57,7 +58,7 @@ func (mht *MaxHeapTuple) Push(as ...[]int) {
 }
 
 func (mht *MaxHeapTuple) Pop() []int {
-	return heap.Pop((*maxHeapTupleHelper)(mht)).([]int)
+	return *heap.Pop((*maxHeapTupleHelper)(mht)).(*[]int)
 }
 
 func (mht MaxHeapTuple) Copy() MaxHeapTuple {
