@@ -34,3 +34,14 @@ func TestMinHeapTuple(t *testing.T) {
 	assert.Equal(t, Tuple(6), mht.Pop())
 	assert.Equal(t, Tuple(2), mht1.Min())
 }
+
+func BenchmarkLess(b *testing.B) {
+	var mht minHeapTupleHelper
+	mht.Push(Tuple(1, 2, 3))
+	mht.Push(Tuple(1, 2, 4))
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		mht.Less(0, 1)
+	}
+}

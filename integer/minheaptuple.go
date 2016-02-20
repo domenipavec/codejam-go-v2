@@ -5,10 +5,17 @@ import "container/heap"
 type minHeapTupleHelper MinHeapTuple
 
 func (mht minHeapTupleHelper) Less(i, j int) bool {
-	minlen := Min(len(mht[i]), len(mht[j]))
+	is := mht[i]
+	js := mht[j]
+	var minlen int
+	if len(is) < len(js) {
+		minlen = len(is)
+	} else {
+		minlen = len(js)
+	}
 	for k := 0; k < minlen; k++ {
-		if mht[i][k] != mht[j][k] {
-			return mht[i][k] < mht[j][k]
+		if is[k] != js[k] {
+			return is[k] < js[k]
 		}
 	}
 	return false
