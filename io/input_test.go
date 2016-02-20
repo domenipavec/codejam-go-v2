@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/matematik7/codejam-go/integer"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -60,10 +61,25 @@ func TestSliceInt(t *testing.T) {
 	assert.Equal(t, []int{1, -123, 1000000}, i.SliceInt(3))
 }
 
+func TestSetInt(t *testing.T) {
+	i := initInput("1 -123\n1000000")
+	ms := i.SetInt(3)
+	assert.True(t, ms.ContainsAll(1, -123, 1000000))
+}
+
 func TestMultiSetInt(t *testing.T) {
 	i := initInput("1 -123\n1000000")
 	ms := i.MultiSetInt(3)
 	assert.True(t, ms.ContainsAll(1, -123, 1000000))
+}
+
+func TestSliceTuple(t *testing.T) {
+	i := initInput("1 -123\n1000000")
+	st := i.SliceTuple(3)
+	assert.Equal(t, 3, len(st))
+	assert.Equal(t, integer.Tuple(1), st[0])
+	assert.Equal(t, integer.Tuple(-123), st[1])
+	assert.Equal(t, integer.Tuple(1000000), st[2])
 }
 
 func TestGridInt(t *testing.T) {

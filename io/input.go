@@ -98,8 +98,16 @@ func (i *Input) SliceInt(n int) []int {
 	return ints
 }
 
+func (i *Input) SetInt(n int) *integer.Set {
+	return integer.NewSet(i.SliceInt(n)...)
+}
+
 func (i *Input) MultiSetInt(n int) *integer.MultiSet {
 	return integer.NewMultiSet(i.SliceInt(n)...)
+}
+
+func (i *Input) SliceTuple(n int) integer.SliceTuple {
+	return integer.NewSliceTuple(i.SliceInt(n)...)
 }
 
 func (i *Input) GridInt(y, x int) [][]int {
