@@ -17,7 +17,8 @@ type Output struct {
 
 	output *bytes.Buffer
 
-	periodicPrint chan struct{}
+	periodicPrint       chan struct{}
+	previousPeriodicInt int
 }
 
 func newOutput(w io.Writer) *Output {
@@ -86,7 +87,8 @@ func (o *Output) Periodic(a ...interface{}) {
 func (o *Output) PeriodicInt(a int) {
 	select {
 	case <-o.periodicPrint:
-		log.Println(a)
+		log.Println(a, "Rate =", a-o.previousPeriodicInt)
+		o.previousPeriodicInt = a
 	default:
 	}
 }
