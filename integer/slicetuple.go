@@ -16,16 +16,16 @@ func NewSliceTuple(as ...int) SliceTuple {
 	return st
 }
 
-func (st *SliceTuple) Prepend(a []int) {
-	*st = append([][]int{a}, *st...)
+func (st *SliceTuple) Prepend(a ...[]int) {
+	*st = append(a, *st...)
 }
 
-func (st *SliceTuple) Append(a []int) {
-	*st = append(*st, a)
+func (st *SliceTuple) Append(a ...[]int) {
+	*st = append(*st, a...)
 }
 
-func (st *SliceTuple) Insert(i int, a []int) {
-	*st = append((*st)[:i], append([][]int{a}, (*st)[i:]...)...)
+func (st *SliceTuple) Insert(i int, a ...[]int) {
+	*st = append((*st)[:i], append(a, (*st)[i:]...)...)
 }
 
 func (st SliceTuple) PrefixConst(a ...int) {

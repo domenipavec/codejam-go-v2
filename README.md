@@ -87,3 +87,47 @@ Multiset implementation for integers (using map[int]int)
 - **ms.RemoveOne(...int)** - remove one of each given int from MultiSet
 - **ms.RemoveAll(...int)** - remove all of each given int from MultiSet
 - **ms.Clear()** - remove all elements from MultiSet
+
+### integer.SliceTuple
+
+SliceTuple is a slice of integer slices that act as tuples ([][]int)
+
+- **[]int := integer.Tuple(...int)** - construct tuple from given ints
+- **st := NewSliceTuple(...int)** - construct SliceTuple from given ints, each int its own tuple
+- **st.Copy()** - returns independent copy of SliceTuple
+- **st.Prepend(...[]int)** - prepend tuple(s) to slice
+- **st.Append(...[]int)** - append tuple(s) to slice
+- **st.Insert(i, ...[]int)** - insert tuple(s) on i-th place
+- **st.PrefixConst(...int)** - prefix all tuples with given ints
+- **st.PrefixIndex()** - prefix all tuples with their slice index
+- **st.PostfixConst(...int)** - postfix all tuples with given ints
+- **st.PostfixIndex()** - postfix all tuples with their slice index
+- **st.Delete(i)** - delete tuple at i
+- **st.DeleteFirst()** - delete first tuple
+- **st.DeleteLast()** - delete last tuple
+- **st.Swap(i, j)** - swap i-th and j-th tuple
+- **st.Reverse()** - reverse slice
+- **st.SortAsc()** - sort ascending based an all elements from left to right
+- **st.SortDesc()** - sort descending based on all elements from left to right
+
+### integer.MinHeapTuple
+
+MinHeapTuple is min heap implementation based on go's heap container and SliceTuple
+
+- **mht := NewMinHeapTuple(SliceTuple)** - construct min heap from SliceTuple
+- **mht.Copy()** - return independent copy of MinHeapTuple
+- **mht.Min()** - get min tuple from heap
+- **mht.FixMin()** - fix heap if min element was changed
+- **mht.Push(...[]int)** - push given tuples on heap
+- **mht.Pop()** - returns and deletes min tuple from heap
+
+### integer.MaxHeapTuple
+
+MaxHeapTuple is max heap implementation based on go's heap container and SliceTuple
+
+- **mht := NewMaxHeapTuple(SliceTuple)** - construct max heap from SliceTuple
+- **mht.Copy()** - return independent copy of MaxHeapTuple
+- **mht.Max()** - get max tuple from heap
+- **mht.FixMax()** - fix heap if max element was changed
+- **mht.Push(...[]int)** - push given tuples on heap
+- **mht.Pop()** - returns and deletes max tuple from heap

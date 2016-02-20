@@ -43,10 +43,16 @@ func (mht *MaxHeapTuple) FixMax() {
 	heap.Fix((*maxHeapTupleHelper)(mht), 0)
 }
 
-func (mht *MaxHeapTuple) Push(a []int) {
-	heap.Push((*maxHeapTupleHelper)(mht), a)
+func (mht *MaxHeapTuple) Push(as ...[]int) {
+	for _, a := range as {
+		heap.Push((*maxHeapTupleHelper)(mht), a)
+	}
 }
 
 func (mht *MaxHeapTuple) Pop() []int {
 	return heap.Pop((*maxHeapTupleHelper)(mht)).([]int)
+}
+
+func (mht MaxHeapTuple) Copy() MaxHeapTuple {
+	return MaxHeapTuple(SliceTuple(mht).Copy())
 }

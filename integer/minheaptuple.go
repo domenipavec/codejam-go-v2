@@ -43,10 +43,16 @@ func (mht *MinHeapTuple) FixMin() {
 	heap.Fix((*minHeapTupleHelper)(mht), 0)
 }
 
-func (mht *MinHeapTuple) Push(a []int) {
-	heap.Push((*minHeapTupleHelper)(mht), a)
+func (mht *MinHeapTuple) Push(as ...[]int) {
+	for _, a := range as {
+		heap.Push((*minHeapTupleHelper)(mht), a)
+	}
 }
 
 func (mht *MinHeapTuple) Pop() []int {
 	return heap.Pop((*minHeapTupleHelper)(mht)).([]int)
+}
+
+func (mht MinHeapTuple) Copy() MinHeapTuple {
+	return MinHeapTuple(SliceTuple(mht).Copy())
 }
