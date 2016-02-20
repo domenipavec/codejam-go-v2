@@ -67,3 +67,30 @@ func Range(params ...int) []int {
 	}
 	return slice
 }
+
+func gcd2(a, b int) int {
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+
+func Gcd(as ...int) int {
+	gcd := as[0]
+	for _, a := range as[1:] {
+		gcd = gcd2(gcd, a)
+	}
+	return gcd
+}
+
+func lcm2(a, b int) int {
+	return a * b / gcd2(a, b)
+}
+
+func Lcm(as ...int) int {
+	lcm := as[0]
+	for _, a := range as[1:] {
+		lcm = lcm2(lcm, a)
+	}
+	return lcm
+}

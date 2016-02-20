@@ -58,6 +58,8 @@ Useful function for integers
 - **integer.Range(max)** - python style range, return slice of ints from *0* to *max-1*
 - **integer.Range(min,max)** - python style range, return slice of ints from *min* to *max-1*
 - **integer.Range(min,max,step)** - python style range, return slice of ints from *min* to *max-1* with step spacing
+- **integer.Gcd(...int)** - return greatest common divider of given ints
+- **integer.Lcm(...int)** - return least common multiple of given ints 
 
 ### integer.Set
 
