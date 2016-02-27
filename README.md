@@ -115,6 +115,8 @@ SliceTuple is a slice of integer slices that act as tuples ([]\*[]int)
 - **st.Reverse()** - reverse slice
 - **st.SortAsc()** - sort ascending based an all elements from left to right
 - **st.SortDesc()** - sort descending based on all elements from left to right
+- **st.SortAscBy(n)** - sort ascending based on nth element
+- **st.SortDescBy(n)** - sort descending based on nth element
 
 ### integer.MinHeapTuple
 

@@ -151,3 +151,41 @@ func (st SliceTupleDesc) Len() int      { return len(st) }
 func (st SliceTuple) SortDesc() {
 	sort.Sort(SliceTupleDesc(st))
 }
+
+type SliceTupleAscBy struct {
+	st SliceTuple
+	n  int
+}
+
+func (sta SliceTupleAscBy) Less(i, j int) bool {
+	return (*sta.st[i])[sta.n] < (*sta.st[j])[sta.n]
+}
+func (sta SliceTupleAscBy) Swap(i, j int) { sta.st[i], sta.st[j] = sta.st[j], sta.st[i] }
+func (sta SliceTupleAscBy) Len() int      { return len(sta.st) }
+
+func (st SliceTuple) SortAscBy(n int) {
+	sta := SliceTupleAscBy{
+		st: st,
+		n:  n,
+	}
+	sort.Sort(sta)
+}
+
+type SliceTupleDescBy struct {
+	st SliceTuple
+	n  int
+}
+
+func (sta SliceTupleDescBy) Less(i, j int) bool {
+	return (*sta.st[i])[sta.n] > (*sta.st[j])[sta.n]
+}
+func (sta SliceTupleDescBy) Swap(i, j int) { sta.st[i], sta.st[j] = sta.st[j], sta.st[i] }
+func (sta SliceTupleDescBy) Len() int      { return len(sta.st) }
+
+func (st SliceTuple) SortDescBy(n int) {
+	sta := SliceTupleDescBy{
+		st: st,
+		n:  n,
+	}
+	sort.Sort(sta)
+}

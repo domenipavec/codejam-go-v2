@@ -100,6 +100,24 @@ func TestSliceTuple(t *testing.T) {
 	assert.Equal(t, Tuple(3, -1, 3, 1, 3), st.Get(3))
 	assert.Equal(t, Tuple(4, -1, 5, 1, 4), st.Get(4))
 
+	st.SortAscBy(2)
+
+	assert.Equal(t, 5, len(st))
+	assert.Equal(t, Tuple(2, -1, 1, 1, 2), st.Get(0))
+	assert.Equal(t, Tuple(1, -1, 2, 1, 1), st.Get(1))
+	assert.Equal(t, Tuple(3, -1, 3, 1, 3), st.Get(2))
+	assert.Equal(t, Tuple(0, -1, 4, 1, 0), st.Get(3))
+	assert.Equal(t, Tuple(4, -1, 5, 1, 4), st.Get(4))
+
+	st.SortDescBy(2)
+
+	assert.Equal(t, 5, len(st))
+	assert.Equal(t, Tuple(4, -1, 5, 1, 4), st.Get(0))
+	assert.Equal(t, Tuple(0, -1, 4, 1, 0), st.Get(1))
+	assert.Equal(t, Tuple(3, -1, 3, 1, 3), st.Get(2))
+	assert.Equal(t, Tuple(1, -1, 2, 1, 1), st.Get(3))
+	assert.Equal(t, Tuple(2, -1, 1, 1, 2), st.Get(4))
+
 	st.SortDesc()
 
 	assert.Equal(t, 5, len(st))
