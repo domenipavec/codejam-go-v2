@@ -17,6 +17,7 @@ Reads whitespace separated stuff from input file
 - **input.SetInt(n)** - *n* ints to integer.Set
 - **input.MultiSetInt(n)** - *n* ints to integer.MultiSet
 - **input.SliceTuple(n)** - *n* ints to SliceTuple, each int its own tuple
+- **input.SliceTupleM(n, m)** - *n* tuples of *m* ints to SliceTuple
 - **input.GridInt(y, x)** - *y* rows and *x* cols to [][]int, first is row index
 - **input.SliceFloat(n)** - *n* floats to []float64
 - **input.GridFloat(y, x)** - *y* rows and *x* cols to [][]float64, first is row index
@@ -59,7 +60,7 @@ Useful function for integers
 - **integer.Range(min,max)** - python style range, return slice of ints from *min* to *max-1*
 - **integer.Range(min,max,step)** - python style range, return slice of ints from *min* to *max-1* with step spacing
 - **integer.Gcd(...int)** - return greatest common divider of given ints
-- **integer.Lcm(...int)** - return least common multiple of given ints 
+- **integer.Lcm(...int)** - return least common multiple of given ints
 
 ### integer.Set
 

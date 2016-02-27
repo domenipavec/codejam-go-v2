@@ -82,6 +82,14 @@ func TestSliceTuple(t *testing.T) {
 	assert.Equal(t, integer.Tuple(1000000), st.Get(2))
 }
 
+func TestSliceTupleM(t *testing.T) {
+	i := initInput("1 -123\n1000000 2")
+	st := i.SliceTupleM(2, 2)
+	assert.Equal(t, 2, len(st))
+	assert.Equal(t, integer.Tuple(1, -123), st.Get(0))
+	assert.Equal(t, integer.Tuple(1000000, 2), st.Get(1))
+}
+
 func TestGridInt(t *testing.T) {
 	i := initInput("1 2 3\n4 5 6")
 	assert.Equal(t, [][]int{[]int{1, 2, 3}, []int{4, 5, 6}}, i.GridInt(2, 3))

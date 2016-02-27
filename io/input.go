@@ -110,6 +110,14 @@ func (i *Input) SliceTuple(n int) integer.SliceTuple {
 	return integer.NewSliceTuple(i.SliceInt(n)...)
 }
 
+func (i *Input) SliceTupleM(n, m int) integer.SliceTuple {
+	st := integer.NewSliceTuple()
+	for j := 0; j < n; j++ {
+		st.Append(integer.Tuple(i.SliceInt(m)...))
+	}
+	return st
+}
+
 func (i *Input) GridInt(y, x int) [][]int {
 	grid := make([][]int, 0, y)
 	for j := 0; j < y; j++ {
