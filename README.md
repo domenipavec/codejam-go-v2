@@ -121,7 +121,7 @@ SliceTuple is a slice of integer slices that act as tuples ([]\*[]int)
 Following functions use tuples as points: *x* is 0, *y* is 1
 - **st.PointsCCW(i, j, k)** - returns 0 if points are collinear, bigger than 0 if point k is counterclockwise from j looking from i
 - **st.PointsDistance2(i, j)** - returns square of distance between point i and j
-- **st.ConvexHull()** - returns number of points of convex hull excluding collinears on hull, hull points are at beggining of slice orderd counterclockwise beginning at bottom most left most point
+- **st.ConvexHull(includeCollinears)** - returns number of points of convex hull, hull points are at the beginning of slice ordered counterclockwise beginning at bottom most left most point, parameter is boolean whether to include collinears on hull
 
 ### integer.MinHeapTuple
 

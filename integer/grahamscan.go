@@ -60,7 +60,7 @@ func (st SliceTuple) convexHullLowestY() int {
 	return mini
 }
 
-func (st SliceTuple) ConvexHull() int {
+func (st SliceTuple) ConvexHull(includeCollinears bool) int {
 	if len(st) <= 2 {
 		return len(st)
 	}
@@ -73,12 +73,21 @@ func (st SliceTuple) ConvexHull() int {
 	i := 2
 	end := len(st)
 
-	// skip beginning collinears
-	for st.PointsCCW(M-1, M, i) == 0 {
+	// skip or add beginning collinears
+	for st.PointsCCW(0, 1, i) == 0 {
 		i++
-		if i == end {
-			return 2
+		if includeCollinears {
+			M++
 		}
+		if i == end {
+			break
+		}
+	}
+	if includeCollinears {
+		st[1 : M+1].Reverse()
+	}
+	if i == end {
+		return M + 1
 	}
 
 	// skip ending collinears
@@ -87,12 +96,26 @@ func (st SliceTuple) ConvexHull() int {
 	}
 
 	for ; i < end; i++ {
-		for st.PointsCCW(M-1, M, i) <= 0 {
-			M--
+		if includeCollinears {
+			for st.PointsCCW(M-1, M, i) < 0 {
+				M--
+			}
+		} else {
+			for st.PointsCCW(M-1, M, i) <= 0 {
+				M--
+			}
 		}
 
 		M++
 		st.Swap(M, i)
+	}
+
+	// add ending collinears
+	if includeCollinears {
+		for i := end; i < len(st); i++ {
+			M++
+			st.Swap(M, i)
+		}
 	}
 	return M + 1
 }
