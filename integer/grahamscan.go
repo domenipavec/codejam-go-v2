@@ -7,7 +7,18 @@ type convexHullSortByPolarAngle SliceTuple
 func (spa convexHullSortByPolarAngle) Less(i, j int) bool {
 	i++
 	j++
-	return SliceTuple(spa).PointsCCW(0, i, j) > 0
+	ccw := SliceTuple(spa).PointsCCW(0, i, j)
+	if ccw != 0 {
+		return ccw > 0
+	}
+
+	// sort collinears from furthest away to nearest
+	dx := Abs((*spa[j])[0]-(*spa[0])[0]) - Abs((*spa[i])[0]-(*spa[0])[0])
+	if dx != 0 {
+		return dx < 0
+	}
+
+	return ((*spa[j])[1]-(*spa[0])[1])-((*spa[i])[1]-(*spa[0])[1]) < 0
 }
 func (spa convexHullSortByPolarAngle) Swap(i, j int) {
 	i++
@@ -50,7 +61,7 @@ func (st SliceTuple) convexHullLowestY() int {
 }
 
 func (st SliceTuple) ConvexHull() int {
-	if len(st) <= 3 {
+	if len(st) <= 2 {
 		return len(st)
 	}
 
@@ -59,20 +70,29 @@ func (st SliceTuple) ConvexHull() int {
 	sort.Sort(convexHullSortByPolarAngle(st))
 
 	M := 1
-	for i := 2; i < len(st); i++ {
-		for st.PointsCCW(M-1, M, i) < 0 {
+	i := 2
+	end := len(st)
+
+	// skip beginning collinears
+	for st.PointsCCW(M-1, M, i) == 0 {
+		i++
+		if i == end {
+			return 2
+		}
+	}
+
+	// skip ending collinears
+	for st.PointsCCW(0, end-1, end-2) == 0 {
+		end--
+	}
+
+	for ; i < end; i++ {
+		for st.PointsCCW(M-1, M, i) <= 0 {
 			M--
 		}
 
 		M++
 		st.Swap(M, i)
-
-		if st.PointsCCW(M-2, M-1, M) == 0 {
-			if st.PointsDistance2(M-2, M) > st.PointsDistance2(M-2, M-1) {
-				st.Swap(M, M-1)
-			}
-			M--
-		}
 	}
 	return M + 1
 }
