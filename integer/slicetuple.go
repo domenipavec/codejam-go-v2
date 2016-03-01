@@ -87,6 +87,12 @@ func (st SliceTuple) Copy() SliceTuple {
 	return cp
 }
 
+func (st SliceTuple) CopySlice() SliceTuple {
+	cp := make([]*[]int, len(st))
+	copy(cp, st)
+	return cp
+}
+
 func (st SliceTuple) Swap(i, j int) {
 	st[i], st[j] = st[j], st[i]
 }
