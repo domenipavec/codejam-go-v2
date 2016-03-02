@@ -77,20 +77,59 @@ func (st *SliceTuple) DeleteLast() []int {
 	return st.Delete(len(*st) - 1)
 }
 
+var stPool []SliceTuple
+var tuplePool [][]int
+
 func (st SliceTuple) Copy() SliceTuple {
-	cp := make([]*[]int, len(st))
-	for index, value := range st {
-		newValue := make([]int, len(*value))
-		copy(newValue, *value)
-		cp[index] = &newValue
+	var cp SliceTuple
+
+	if len(stPool) <= 0 {
+		cp = make(SliceTuple, 0, len(st))
+	} else {
+		cp = stPool[len(stPool)-1]
+		stPool = stPool[:len(stPool)-1]
+	}
+
+	for _, value := range st {
+		var newValue []int
+
+		if len(tuplePool) <= 0 {
+			newValue = make([]int, 0, len(*value))
+		} else {
+			newValue = tuplePool[len(tuplePool)-1]
+			tuplePool = tuplePool[:len(tuplePool)-1]
+		}
+
+		newValue = append(newValue, *value...)
+
+		cp = append(cp, &newValue)
 	}
 	return cp
 }
 
+func (st SliceTuple) CopyRelease() {
+	for _, value := range st {
+		tuplePool = append(tuplePool, (*value)[:0])
+	}
+	stPool = append(stPool, st[:0])
+}
+
 func (st SliceTuple) CopySlice() SliceTuple {
-	cp := make([]*[]int, len(st))
-	copy(cp, st)
+	var cp SliceTuple
+
+	if len(stPool) <= 0 {
+		cp = make(SliceTuple, 0, len(st))
+	} else {
+		cp = stPool[len(stPool)-1]
+		stPool = stPool[:len(stPool)-1]
+	}
+
+	cp = append(cp, st...)
 	return cp
+}
+
+func (st SliceTuple) CopySliceRelease() {
+	stPool = append(stPool, st[:0])
 }
 
 func (st SliceTuple) Swap(i, j int) {
