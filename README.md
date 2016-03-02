@@ -41,6 +41,7 @@ Output to console:
 - **output.Periodic(...interface{})** - prints all only every second, for fast loops, spaces are added between operands when neither is a string
 - **output.Periodicf(...interface{})** - prints with format string only every second, for fast loops
 - **output.PeriodicInt(a)** - prints integer *a* only every second, for very fast loops, avoids memory allocation for interface{}
+- **ouptut.PeriodicCount()** - increases internal count every call, prints only every second
 
 Testing asserts:
 (all asserts have optional fatal bool parameter, that can be set to terminate if mistake is encountered)
