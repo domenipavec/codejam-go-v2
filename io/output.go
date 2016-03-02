@@ -19,6 +19,8 @@ type Output struct {
 
 	periodicPrint       chan struct{}
 	previousPeriodicInt int
+	periodicCount       int
+	prevPeriodicCount   int
 }
 
 func newOutput(w io.Writer) *Output {
@@ -89,6 +91,17 @@ func (o *Output) PeriodicInt(a int) {
 	case <-o.periodicPrint:
 		log.Println(a, "Rate =", a-o.previousPeriodicInt)
 		o.previousPeriodicInt = a
+	default:
+	}
+}
+
+func (o *Output) PeriodicCount() {
+	o.periodicCount++
+	select {
+	case <-o.periodicPrint:
+		c := o.periodicCount
+		log.Println(c, "Rate =", c-o.prevPeriodicCount)
+		o.prevPeriodicCount = c
 	default:
 	}
 }
