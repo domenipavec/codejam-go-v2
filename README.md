@@ -146,3 +146,19 @@ Tuple is a collection of ints, floats and strings
 - **s := FloatDesc(c)** - sort by *c* float descending
 - **s := StringAsc(c)** - sort by *c* string ascending
 - **s := StringDesc(c)** - sort by *c* string descending
+
+## twod
+
+2d library, everything to do with 2d vectors and stuff
+
+- **AngleDiff(a1, a2)** - returns difference between angles in radians that is always between 0 and 2PI
+
+### twod.Vector
+
+2d vector represented as []float64, x is 0 and y is 1
+
+- **v := NewVector(x, y)** - construct new vector
+- **v.Len()** - vector length |v|
+- **v := v.Sub(v1)** - returns vector v-v1
+- **v.Dot(v1)** - returns dot product v.v1
+- **v.Atan2()** - calculates vector angle using atan2 function
