@@ -12,21 +12,27 @@ type Tuple struct {
 }
 
 func IntTuple(ints ...int) *Tuple {
-	return &Tuple{
-		Ints: ints,
+	t := &Tuple{
+		Ints: make([]int, len(ints)),
 	}
+	copy(t.Ints, ints)
+	return t
 }
 
 func FloatTuple(floats ...float64) *Tuple {
-	return &Tuple{
-		Floats: floats,
+	t := &Tuple{
+		Floats: make([]float64, len(floats)),
 	}
+	copy(t.Floats, floats)
+	return t
 }
 
 func StringTuple(strings ...string) *Tuple {
-	return &Tuple{
-		Strings: strings,
+	t := &Tuple{
+		Strings: make([]string, len(strings)),
 	}
+	copy(t.Strings, strings)
+	return t
 }
 
 func (t *Tuple) Copy() *Tuple {
@@ -143,19 +149,19 @@ func (st *SliceTuple) RemoveLast() *Tuple {
 
 func (st *SliceTuple) PrefixIntConst(cs ...int) {
 	for _, tuple := range st.Tuples {
-		tuple.Ints = append(cs, tuple.Ints...)
+		tuple.Ints = append(append([]int{}, cs...), tuple.Ints...)
 	}
 }
 
 func (st *SliceTuple) PrefixFloatConst(cs ...float64) {
 	for _, tuple := range st.Tuples {
-		tuple.Floats = append(cs, tuple.Floats...)
+		tuple.Floats = append(append([]float64{}, cs...), tuple.Floats...)
 	}
 }
 
 func (st *SliceTuple) PrefixStringConst(cs ...string) {
 	for _, tuple := range st.Tuples {
-		tuple.Strings = append(cs, tuple.Strings...)
+		tuple.Strings = append(append([]string{}, cs...), tuple.Strings...)
 	}
 }
 
