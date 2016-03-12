@@ -16,8 +16,9 @@ Reads whitespace separated stuff from input file
 - **input.SliceInt(n)** - *n* ints to []int
 - **input.SetInt(n)** - *n* ints to integer.Set
 - **input.MultiSetInt(n)** - *n* ints to integer.MultiSet
-- **input.SliceTuple(n)** - *n* ints to SliceTuple, each int its own tuple
-- **input.SliceTupleM(n, m)** - *n* tuples of *m* ints to SliceTuple
+- **input.SliceTupleFromInts(n, m)** - *n* tuples of *m* ints to SliceTuple
+- **input.SliceTupleFromFloats(n, m)** - *n* tuples of *m* floats to SliceTuple
+- **input.SliceTupleFromStrings(n, m)** - *n* tuples of *m* strings to SliceTuple
 - **input.GridInt(y, x)** - *y* rows and *x* cols to [][]int, first is row index
 - **input.SliceFloat(n)** - *n* floats to []float64
 - **input.GridFloat(y, x)** - *y* rows and *x* cols to [][]float64, first is row index
@@ -94,57 +95,54 @@ Multiset implementation for integers (using map[int]int)
 - **ms.RemoveAll(...int)** - remove all of each given int from MultiSet
 - **ms.Clear()** - remove all elements from MultiSet
 
-### integer.SliceTuple
+## st
 
-SliceTuple is a slice of integer slices that act as tuples ([]\*[]int)
+### st.Tuple
 
-- **[]int := integer.Tuple(...int)** - construct tuple from given ints
-- **st := NewSliceTuple(...int)** - construct SliceTuple from given ints, each int its own tuple
-- **st.Copy()** - returns independent copy of SliceTuple
-- **st.CopyRelease()** - releases copy to pool (WARNING: not thread safe)
-- **st.CopySlice()** - returns copy of slice that contains pointers to same elements as original
-- **st.CopySliceRelease()** - releases copy slice to pool (WARNING: not thread safe)
-- **st.Get(int)** - get i-th tuple, please use this as it dereferences the pointer
-- **st.Prepend(...[]int)** - prepend tuple(s) to slice
-- **st.Append(...[]int)** - append tuple(s) to slice
-- **st.Insert(i, ...[]int)** - insert tuple(s) on i-th place
-- **st.PrefixConst(...int)** - prefix all tuples with given ints
-- **st.PrefixIndex()** - prefix all tuples with their slice index
-- **st.PostfixConst(...int)** - postfix all tuples with given ints
-- **st.PostfixIndex()** - postfix all tuples with their slice index
-- **st.Delete(i)** - delete tuple at i
-- **st.DeleteFirst()** - delete first tuple
-- **st.DeleteLast()** - delete last tuple
-- **st.Swap(i, j)** - swap i-th and j-th tuple
-- **st.Reverse()** - reverse slice
-- **st.SortAsc()** - sort ascending based an all elements from left to right
-- **st.SortDesc()** - sort descending based on all elements from left to right
-- **st.SortAscBy(n)** - sort ascending based on nth element
-- **st.SortDescBy(n)** - sort descending based on nth element
+Tuple is a collection of ints, floats and strings
 
-Following functions use tuples as points: *x* is 0, *y* is 1
-- **st.PointsCCW(i, j, k)** - returns 0 if points are collinear, bigger than 0 if point k is counterclockwise from j looking from i
-- **st.PointsDistance2(i, j)** - returns square of distance between point i and j
-- **st.ConvexHull(includeCollinears)** - returns number of points of convex hull, hull points are at the beginning of slice ordered counterclockwise beginning at bottom most left most point, parameter is boolean whether to include collinears on hull
+- **Tuple := st.IntTuple(...int)** - construct tuple from given ints
+- **Tuple := st.FloatTuple(...float64)** - construct tuple from given floats
+- **Tuple := st.StringTuple(...string)** - construct tuple from given strings
+- **Tuple := t.Copy()** - returns independent copy of Tuple
 
-### integer.MinHeapTuple
+### st.SliceTuple
 
-MinHeapTuple is min heap implementation based on go's heap container and SliceTuple
+- **slt := st.NewSliceTuple(...Tuple)** - construct SliceTuple from given tuples
+- **slt := st.FromInts(c, ...int)** - construct SliceTuple from given ints, *c* ints per tuple
+- **slt := st.FromFloats(c, ...float64)** - construct SliceTuple from given floats, *c* floats per tuple
+- **slt := st.FromStrings(c, ...string)** - construct SliceTuple from given strings, *c* strings per tuple
+- **slt := slt.Copy()** - returns independent copy of SliceTuple
+- **slt := slt.CopySlice()** - returns copy of slice that contains pointers to same elements as original
+- **slt.Prepend(...Tuple)** - prepend tuple(s) to slice
+- **slt.Append(...Tuple)** - append tuple(s) to slice
+- **slt.Insert(i, ...Tuple)** - insert tuple(s) on i-th place
+- **slt.Remove(i)** - delete tuple at i
+- **slt.RemoveFirst()** - delete first tuple
+- **slt.RemoveLast()** - delete last tuple
+- **slt.PrefixIntConst(...int)** - prefix all tuples with given ints
+- **slt.PrefixFloatConst(...float)** - prefix all tuples with given floats
+- **slt.PrefixStringConst(...string)** - prefix all tuples with given strings
+- **slt.PrefixIntIndex()** - prefix all tuples with their slice index
+- **slt.PostfixIntConst(...int)** - postfix all tuples with given ints
+- **slt.PostfixFloatConst(...float)** - postfix all tuples with given floats
+- **slt.PostfixStringConst(...string)** - postfix all tuples with given strings
+- **slt.PostfixIntIndex()** - postfix all tuples with their slice index
+- **slt.Reverse()** - reverse slice
+- **slt.Swap(i, j)** - swap i-th and j-th tuple
+- **slt.Len()** - return length of slice
+- **slt.SortOrder(...Sorter)** - set sort order with sorters (see st.Sorter section)
+- **slt.Sort()** - sort based on sort order
+- **slt.HeapInit()** - initialize heap
+- **slt.HeapPop()** - remove min and return it from heap
+- **slt.HeapPush(Tuple)** - add Tuple to heap
+- **slt.HeapFix(i int)** - fix heap after *i* was changed
 
-- **mht := NewMinHeapTuple(SliceTuple)** - construct min heap from SliceTuple
-- **mht.Copy()** - return independent copy of MinHeapTuple
-- **mht.Min()** - get min tuple from heap
-- **mht.FixMin()** - fix heap if min element was changed
-- **mht.Push(...[]int)** - push given tuples on heap
-- **mht.Pop()** - returns and deletes min tuple from heap
+### st.Sorter
 
-### integer.MaxHeapTuple
-
-MaxHeapTuple is max heap implementation based on go's heap container and SliceTuple
-
-- **mht := NewMaxHeapTuple(SliceTuple)** - construct max heap from SliceTuple
-- **mht.Copy()** - return independent copy of MaxHeapTuple
-- **mht.Max()** - get max tuple from heap
-- **mht.FixMax()** - fix heap if max element was changed
-- **mht.Push(...[]int)** - push given tuples on heap
-- **mht.Pop()** - returns and deletes max tuple from heap
+- **s := IntAsc(c)** - sort by *c* int ascending
+- **s := IntDesc(c)** - sort by *c* int descending
+- **s := FloatAsc(c)** - sort by *c* float ascending
+- **s := FloatDesc(c)** - sort by *c* float descending
+- **s := StringAsc(c)** - sort by *c* string ascending
+- **s := StringDesc(c)** - sort by *c* string descending

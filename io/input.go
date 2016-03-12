@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/matematik7/codejam-go/integer"
+	"github.com/matematik7/codejam-go/st"
 )
 
 type InputProvider interface {
@@ -106,16 +107,16 @@ func (i *Input) MultiSetInt(n int) *integer.MultiSet {
 	return integer.NewMultiSet(i.SliceInt(n)...)
 }
 
-func (i *Input) SliceTuple(n int) integer.SliceTuple {
-	return integer.NewSliceTuple(i.SliceInt(n)...)
+func (i *Input) SliceTupleFromInts(n, m int) *st.SliceTuple {
+	return st.FromInts(m, i.SliceInt(n*m)...)
 }
 
-func (i *Input) SliceTupleM(n, m int) integer.SliceTuple {
-	st := integer.NewSliceTuple()
-	for j := 0; j < n; j++ {
-		st.Append(integer.Tuple(i.SliceInt(m)...))
-	}
-	return st
+func (i *Input) SliceTupleFromFloats(n, m int) *st.SliceTuple {
+	return st.FromFloats(m, i.SliceFloat(n*m)...)
+}
+
+func (i *Input) SliceTupleFromStrings(n, m int) *st.SliceTuple {
+	return st.FromStrings(m, i.SliceString(n*m)...)
 }
 
 func (i *Input) GridInt(y, x int) [][]int {

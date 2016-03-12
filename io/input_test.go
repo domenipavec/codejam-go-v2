@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/matematik7/codejam-go/integer"
+	"github.com/matematik7/codejam-go/st"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -73,21 +73,28 @@ func TestMultiSetInt(t *testing.T) {
 	assert.True(t, ms.ContainsAll(1, -123, 1000000))
 }
 
-func TestSliceTuple(t *testing.T) {
-	i := initInput("1 -123\n1000000")
-	st := i.SliceTuple(3)
-	assert.Equal(t, 3, len(st))
-	assert.Equal(t, integer.Tuple(1), st.Get(0))
-	assert.Equal(t, integer.Tuple(-123), st.Get(1))
-	assert.Equal(t, integer.Tuple(1000000), st.Get(2))
+func TestSliceTupleFromInts(t *testing.T) {
+	i := initInput("1 -123\n1000000 2")
+	slt := i.SliceTupleFromInts(2, 2)
+	assert.Equal(t, 2, slt.Len())
+	assert.Equal(t, st.IntTuple(1, -123), slt.Tuples[0])
+	assert.Equal(t, st.IntTuple(1000000, 2), slt.Tuples[1])
 }
 
-func TestSliceTupleM(t *testing.T) {
-	i := initInput("1 -123\n1000000 2")
-	st := i.SliceTupleM(2, 2)
-	assert.Equal(t, 2, len(st))
-	assert.Equal(t, integer.Tuple(1, -123), st.Get(0))
-	assert.Equal(t, integer.Tuple(1000000, 2), st.Get(1))
+func TestSliceTupleFromFloats(t *testing.T) {
+	i := initInput("1.1 -123.4\n1e6 2.3e-1")
+	slt := i.SliceTupleFromFloats(2, 2)
+	assert.Equal(t, 2, slt.Len())
+	assert.Equal(t, st.FloatTuple(1.1, -123.4), slt.Tuples[0])
+	assert.Equal(t, st.FloatTuple(1e6, 2.3e-1), slt.Tuples[1])
+}
+
+func TestSliceTupleFromStrings(t *testing.T) {
+	i := initInput("t1 t2\nt3 t4")
+	slt := i.SliceTupleFromStrings(2, 2)
+	assert.Equal(t, 2, slt.Len())
+	assert.Equal(t, st.StringTuple("t1", "t2"), slt.Tuples[0])
+	assert.Equal(t, st.StringTuple("t3", "t4"), slt.Tuples[1])
 }
 
 func TestGridInt(t *testing.T) {
