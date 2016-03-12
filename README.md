@@ -63,6 +63,8 @@ Useful function for integers
 - **integer.Range(min,max,step)** - python style range, return slice of ints from *min* to *max-1* with step spacing
 - **integer.Gcd(...int)** - return greatest common divider of given ints
 - **integer.Lcm(...int)** - return least common multiple of given ints
+- **integer.Pow(a,b)** - returns a to the power b
+- **integer.Log10(a)** - returns log base 10 of a
 
 ### integer.Set
 
