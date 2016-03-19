@@ -7,6 +7,8 @@ import (
 	"log"
 	"strings"
 	"unicode"
+
+	"github.com/gonum/plot/plotter"
 )
 
 type Output struct {
@@ -21,6 +23,8 @@ type Output struct {
 	previousPeriodicInt int
 	periodicCount       int
 	prevPeriodicCount   int
+
+	points plotter.XYs
 }
 
 func newOutput(w io.Writer) *Output {
@@ -112,6 +116,17 @@ func (o *Output) Periodicf(format string, a ...interface{}) {
 		log.Println(a...)
 	default:
 	}
+}
+
+func (o *Output) Point(x, y float64) {
+	o.points = append(o.points, struct{ X, Y float64 }{
+		X: x,
+		Y: y,
+	})
+}
+
+func (o *Output) PointInt(x, y int) {
+	o.Point(float64(x), float64(y))
 }
 
 func (o *Output) init(input *Input, caseN int) {

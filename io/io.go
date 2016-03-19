@@ -7,8 +7,13 @@ import (
 	"os"
 	"os/exec"
 	"runtime/pprof"
+	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gonum/plot"
+	"github.com/gonum/plot/plotutil"
+	"github.com/gonum/plot/vg"
 )
 
 type TestCaseFunc func(*Input, *Output)
@@ -19,6 +24,7 @@ type Parser struct {
 	output        *Output
 	compareOutput *CompareOutput
 
+	baseFn    string
 	inputFn   string
 	outputFn  string
 	correctFn string
@@ -43,10 +49,10 @@ func TestCases(f TestCaseFunc) {
 
 func (parser *Parser) SetFn(inputFn string) {
 	parser.inputFn = inputFn
-	baseFn := strings.TrimSuffix(inputFn, ".in")
-	parser.outputFn = baseFn + ".out"
-	parser.correctFn = baseFn + ".correct"
-	parser.profileFn = baseFn + ".prof"
+	parser.baseFn = strings.TrimSuffix(inputFn, ".in")
+	parser.outputFn = parser.baseFn + ".out"
+	parser.correctFn = parser.baseFn + ".correct"
+	parser.profileFn = parser.baseFn + ".prof"
 }
 
 func (parser *Parser) formatDuration(d int64) string {
@@ -121,6 +127,7 @@ func (parser *Parser) runTestCase(i int) {
 		}
 
 		parser.output.flush()
+		parser.writeChart(i)
 		doneChan <- true
 	}()
 
@@ -163,4 +170,27 @@ loop:
 	if f != nil {
 		pprof.StopCPUProfile()
 	}
+}
+
+func (parser *Parser) writeChart(i int) {
+	if len(parser.output.points) == 0 {
+		return
+	}
+
+	p, err := plot.New()
+	if err != nil {
+		log.Fatalln("Error creating plot:", err)
+	}
+
+	err = plotutil.AddLinePoints(p, "", parser.output.points)
+	if err != nil {
+		log.Fatalln("Error adding linepoints:", err)
+	}
+
+	err = p.Save(4*vg.Inch, 4*vg.Inch, parser.baseFn+strconv.Itoa(i)+".png")
+	if err != nil {
+		log.Fatalln("Error saving img:", err)
+	}
+
+	parser.output.points = parser.output.points[:0]
 }

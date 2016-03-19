@@ -44,6 +44,10 @@ Output to console:
 - **output.PeriodicInt(a)** - prints integer *a* only every second, for very fast loops, avoids memory allocation for interface{}
 - **ouptut.PeriodicCount()** - increases internal count every call, prints only every second
 
+Output to chart (draws a png chart per testcase):
+- **output.Point(x, y)** - chart point with float64 coordinates
+- **output.PointInt(x,y)** - chart point with int coordinates
+
 Testing asserts:
 (all asserts have optional fatal bool parameter, that can be set to terminate if mistake is encountered)
 - **output.AssertByteCount(byte, count, fatal)** - check if output has *count* number of *byte*-s
