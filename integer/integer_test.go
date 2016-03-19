@@ -41,6 +41,8 @@ func TestCeil(t *testing.T) {
 	assert.Equal(t, 2, Ceil(8, 5))
 	assert.Equal(t, 2, Ceil(10, 5))
 	assert.Equal(t, 3, Ceil(11, 5))
+	assert.Equal(t, 0, Ceil(0, 2))
+	assert.Equal(t, 1, Ceil(1, 2))
 }
 
 func TestRange(t *testing.T) {

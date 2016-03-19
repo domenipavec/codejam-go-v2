@@ -38,6 +38,9 @@ func Abs(a int) int {
 }
 
 func Ceil(a, b int) int {
+	if a == 0 {
+		return 0
+	}
 	return ((a - 1) / b) + 1
 }
 
