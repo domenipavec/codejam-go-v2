@@ -202,6 +202,18 @@ func (st *SliceTuple) Reverse() {
 	}
 }
 
+func (st *SliceTuple) Get(i int) *Tuple {
+	return st.Tuples[i]
+}
+
+func (st *SliceTuple) First() *Tuple {
+	return st.Tuples[0]
+}
+
+func (st *SliceTuple) Last() *Tuple {
+	return st.Tuples[len(st.Tuples)-1]
+}
+
 func (st *SliceTuple) Less(i, j int) bool {
 	it := st.Tuples[i]
 	jt := st.Tuples[j]

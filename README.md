@@ -135,6 +135,9 @@ Tuple is a collection of ints, floats and strings
 - **slt.PostfixStringConst(...string)** - postfix all tuples with given strings
 - **slt.PostfixIntIndex()** - postfix all tuples with their slice index
 - **slt.Reverse()** - reverse slice
+- **slt.Get(i)** - returns i-th tuple
+- **slt.First()** - return first tuple
+- **slt.Last()** - return last tuple
 - **slt.Swap(i, j)** - swap i-th and j-th tuple
 - **slt.Len()** - return length of slice
 - **slt.SortOrder(...Sorter)** - set sort order with sorters (see st.Sorter section)
