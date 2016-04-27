@@ -91,7 +91,7 @@ func (i *Input) Digits() []int {
 	return ints
 }
 
-func (i *Input) SliceInt(n int) []int {
+func (i *Input) SliceInt(n int) integer.Slice {
 	ints := make([]int, 0, n)
 	for j := 0; j < n; j++ {
 		ints = append(ints, i.Int())
@@ -119,7 +119,7 @@ func (i *Input) SliceTupleFromStrings(n, m int) *st.SliceTuple {
 	return st.FromStrings(m, i.SliceString(n*m)...)
 }
 
-func (i *Input) GridInt(y, x int) [][]int {
+func (i *Input) GridInt(y, x int) integer.Grid {
 	grid := make([][]int, 0, y)
 	for j := 0; j < y; j++ {
 		grid = append(grid, i.SliceInt(x))

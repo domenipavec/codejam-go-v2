@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/matematik7/codejam-go/integer"
 	"github.com/matematik7/codejam-go/st"
 	"github.com/stretchr/testify/assert"
 )
@@ -58,7 +59,7 @@ func TestDigits(t *testing.T) {
 
 func TestSliceInt(t *testing.T) {
 	i := initInput("1 -123\n1000000")
-	assert.Equal(t, []int{1, -123, 1000000}, i.SliceInt(3))
+	assert.Equal(t, integer.Slice([]int{1, -123, 1000000}), i.SliceInt(3))
 }
 
 func TestSetInt(t *testing.T) {
@@ -99,7 +100,7 @@ func TestSliceTupleFromStrings(t *testing.T) {
 
 func TestGridInt(t *testing.T) {
 	i := initInput("1 2 3\n4 5 6")
-	assert.Equal(t, [][]int{[]int{1, 2, 3}, []int{4, 5, 6}}, i.GridInt(2, 3))
+	assert.Equal(t, integer.Grid([][]int{[]int{1, 2, 3}, []int{4, 5, 6}}), i.GridInt(2, 3))
 }
 
 func TestSliceFloat(t *testing.T) {

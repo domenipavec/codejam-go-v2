@@ -18,13 +18,13 @@ Reads whitespace separated stuff from input file
 - **input.Float()** - float64 input
 - **input.BigInt()** - \*big.Int input
 - **input.Digits()** - split digits without space to []int slice
-- **input.SliceInt(n)** - *n* ints to []int
+- **input.SliceInt(n)** - *n* ints to integer.Slice
 - **input.SetInt(n)** - *n* ints to integer.Set
 - **input.MultiSetInt(n)** - *n* ints to integer.MultiSet
 - **input.SliceTupleFromInts(n, m)** - *n* tuples of *m* ints to SliceTuple
 - **input.SliceTupleFromFloats(n, m)** - *n* tuples of *m* floats to SliceTuple
 - **input.SliceTupleFromStrings(n, m)** - *n* tuples of *m* strings to SliceTuple
-- **input.GridInt(y, x)** - *y* rows and *x* cols to [][]int, first is row index
+- **input.GridInt(y, x)** - *y* rows and *x* cols to integer.Grid, first is row index
 - **input.SliceFloat(n)** - *n* floats to []float64
 - **input.GridFloat(y, x)** - *y* rows and *x* cols to [][]float64, first is row index
 - **input.SliceString(n)** - *n* strings to []string
@@ -105,6 +105,28 @@ Multiset implementation for integers (using map[int]int)
 - **ms.RemoveOne(...int)** - remove one of each given int from MultiSet
 - **ms.RemoveAll(...int)** - remove all of each given int from MultiSet
 - **ms.Clear()** - remove all elements from MultiSet
+
+### integer.Slice
+
+Slice are a few wrapper functions around []int
+
+- **s := integer.NewSlice(n)** - zero slice with n elements
+- **s.Fill(...int)** - fill slice with ints
+- **s.String()** - for direct output.Print, space separated
+
+### integer.Grid
+
+Grid are a few wrapper functions around [][]int
+
+- **g := integer.NewGrid(y, x)** - grid y rows by x cols
+- **g.FillRow(i, ...int)** - fill i-th row with ints
+- **g.FillCol(i, ...int)** - fill i-th col with ints
+- **g.FillRowTuple(i, tuple)** - fill i-th row with ints from tuple
+- **g.FillColTuple(i, tuple)** - fill i-th col with ints from tuple
+- **g.GetRow(i)** - get i-th row in new Slice
+- **g.GetCol(i)** - get i-th col in new Slice
+- **g.String()** - for direct output.Print, space separated cols, rows in lines
+- **g.GoString()** - nice output for Debugf, | separted cols, use with output.Debugf("%#v", g)
 
 ## st
 
