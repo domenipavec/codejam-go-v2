@@ -73,6 +73,8 @@ func TestSliceTupleInt(t *testing.T) {
 	assert.Equal(t, IntTuple(3, -1, 3, 1, 3), st.Tuples[3])
 	assert.Equal(t, IntTuple(4, -1, 5, 1, 4), st.Tuples[4])
 
+	assert.Equal(t, "0 -1 4 1 0", st.Get(0).String())
+
 	st.Swap(2, 3)
 
 	assert.Equal(t, 5, st.Len())

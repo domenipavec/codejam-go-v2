@@ -1,8 +1,10 @@
 package st
 
 import (
+	"bytes"
 	"container/heap"
 	"sort"
+	"strconv"
 )
 
 type Tuple struct {
@@ -50,6 +52,33 @@ func (t *Tuple) Copy() *Tuple {
 		copy(tnew.Strings, t.Strings)
 	}
 	return tnew
+}
+
+func (t Tuple) String() string {
+	buffer := &bytes.Buffer{}
+	i := 0
+	for _, d := range t.Ints {
+		if i != 0 {
+			buffer.WriteByte(' ')
+		}
+		buffer.WriteString(strconv.Itoa(d))
+		i++
+	}
+	for _, d := range t.Floats {
+		if i != 0 {
+			buffer.WriteByte(' ')
+		}
+		buffer.WriteString(strconv.FormatFloat(d, 'f', -1, 64))
+		i++
+	}
+	for _, d := range t.Strings {
+		if i != 0 {
+			buffer.WriteByte(' ')
+		}
+		buffer.WriteString(d)
+		i++
+	}
+	return buffer.String()
 }
 
 type Type int
