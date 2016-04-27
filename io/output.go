@@ -113,7 +113,7 @@ func (o *Output) PeriodicCount() {
 func (o *Output) Periodicf(format string, a ...interface{}) {
 	select {
 	case <-o.periodicPrint:
-		log.Println(a...)
+		log.Printf(format, a...)
 	default:
 	}
 }
