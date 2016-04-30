@@ -28,6 +28,7 @@ Reads whitespace separated stuff from input file
 - **input.SliceFloat(n)** - *n* floats to []float64
 - **input.GridFloat(y, x)** - *y* rows and *x* cols to [][]float64, first is row index
 - **input.SliceString(n)** - *n* strings to []string
+- **input.SliceBytes(n)** - *n* []byte words to [][]byte
 
 
 ## output
