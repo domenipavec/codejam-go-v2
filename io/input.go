@@ -49,7 +49,10 @@ func (i *Input) String() string {
 
 func (i *Input) Bytes() []byte {
 	i.Scan()
-	return i.scanner.Bytes()
+	data := i.scanner.Bytes()
+	data_copy := make([]byte, len(data))
+	copy(data_copy, data)
+	return data_copy
 }
 
 func (i *Input) Int() int {
@@ -149,4 +152,12 @@ func (i *Input) SliceString(n int) []string {
 		strs = append(strs, i.String())
 	}
 	return strs
+}
+
+func (i *Input) SliceBytes(n int) [][]byte {
+	sb := make([][]byte, n)
+	for j := range sb {
+		sb[j] = i.Bytes()
+	}
+	return sb
 }
