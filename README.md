@@ -64,6 +64,8 @@ Testing asserts:
 
 Useful function for integers
 
+- **integer.MAX** - maximum int can hold
+- **integer.MIN** - minimum int can hold
 - **integer.Min(...int)** - returns minimal from the given ints
 - **integer.Max(...int)** - returns maximal from the given ints
 - **integer.Abs(a)** - returns absolute value of a
@@ -75,6 +77,7 @@ Useful function for integers
 - **integer.Lcm(...int)** - return least common multiple of given ints
 - **integer.Pow(a,b)** - returns a to the power b
 - **integer.Log10(a)** - returns log base 10 of a
+- **integer.Log2(a)** - returns log base 2 of a
 
 ### integer.Set
 

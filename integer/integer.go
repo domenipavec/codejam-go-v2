@@ -105,3 +105,7 @@ func Pow(a, b int) int {
 func Log10(a int) int {
 	return int(math.Log10(float64(a)))
 }
+
+func Log2(a int) int {
+	return int(math.Log2(float64(a)))
+}
