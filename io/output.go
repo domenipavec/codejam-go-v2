@@ -187,3 +187,15 @@ func (o *Output) AssertEqual(data string, fatal ...bool) {
 		o.assertOutputf(fatal, "Output should be: %q", data)
 	}
 }
+
+func (o *Output) AssertIntEqual(a, b int, fatal ...bool) {
+	if a != b {
+		o.assertOutputf(fatal, "Ints %d and %b not equal", a, b)
+	}
+}
+
+func (o *Output) AssertTrue(a bool, fatal ...bool) {
+	if !a {
+		o.assertOutput(fatal, "Not true")
+	}
+}
