@@ -58,28 +58,31 @@ func (ms *MultiSet) Count(a int) int {
 }
 
 func (ms *MultiSet) Insert(as ...int) {
-	for _, a := range as {
-		ms.Data[a] += 1
-	}
-	ms.length += len(as)
+	ms.InsertN(1, as...)
 }
 
-func (ms *MultiSet) InsertN(a, n int) {
-	ms.Data[a] += n
-	ms.length += n
+func (ms *MultiSet) InsertN(n int, as ...int) {
+	for _, a := range as {
+		ms.Data[a] += n
+	}
+	ms.length += n * len(as)
 }
 
 func (ms *MultiSet) RemoveOne(as ...int) {
+	ms.RemoveN(1, as...)
+}
+
+func (ms *MultiSet) RemoveN(n int, as ...int) {
 	for _, a := range as {
-		if ms.Data[a] <= 0 {
-			log.Fatalln("Nothing to remove when removing:", a)
+		if ms.Data[a] < n {
+			log.Fatalf("Not enough %d in multiset to remove %d.", a, n)
 		}
-		ms.Data[a] -= 1
+		ms.Data[a] -= n
 		if ms.Data[a] == 0 {
 			delete(ms.Data, a)
 		}
 	}
-	ms.length -= len(as)
+	ms.length -= n * len(as)
 }
 
 func (ms *MultiSet) RemoveAll(as ...int) {
