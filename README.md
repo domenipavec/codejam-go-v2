@@ -187,6 +187,14 @@ Tuple is a collection of ints, floats and strings
 - **s := StringAsc(c)** - sort by *c* string ascending
 - **s := StringDesc(c)** - sort by *c* string descending
 
+## stringmap
+
+A simple library for unique integer to string mapping for using strings in integer.MultiSet and graph stuff
+
+- **sm := stringmap.New()**
+- **i = sm.Int(string)** - get index for string
+- **str = sm.Get(int)** - get string for index
+
 ## twod
 
 2d library, everything to do with 2d vectors and stuff
