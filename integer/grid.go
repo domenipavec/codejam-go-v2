@@ -50,7 +50,7 @@ func (g Grid) GetCol(i int) Slice {
 	return s
 }
 
-func (g Grid) String() string {
+func (g Grid) Print(sep string) string {
 	buffer := &bytes.Buffer{}
 	for y := range g {
 		if y != 0 {
@@ -58,12 +58,16 @@ func (g Grid) String() string {
 		}
 		for x, d := range g[y] {
 			if x != 0 {
-				buffer.WriteByte(' ')
+				buffer.WriteString(sep)
 			}
 			buffer.WriteString(strconv.Itoa(d))
 		}
 	}
 	return buffer.String()
+}
+
+func (g Grid) String() string {
+	return g.Print(" ")
 }
 
 func (g Grid) GoString() string {

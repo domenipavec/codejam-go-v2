@@ -37,5 +37,6 @@ func TestGrid(t *testing.T) {
 	assert.Equal(t, Slice([]int{1, 5}), g.GetCol(1))
 	assert.Equal(t, Slice([]int{4, 5, 6}), g.GetRow(1))
 
+	assert.Equal(t, "0.1.0\n4.5.6", g.Print("."))
 	assert.Equal(t, "0 1 0\n4 5 6", g.String())
 }
