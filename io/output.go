@@ -190,7 +190,7 @@ func (o *Output) AssertEqual(data string, fatal ...bool) {
 
 func (o *Output) AssertIntEqual(a, b int, fatal ...bool) {
 	if a != b {
-		o.assertOutputf(fatal, "Ints %d and %b not equal", a, b)
+		o.assertOutputf(fatal, "Ints %d and %d not equal", a, b)
 	}
 }
 
