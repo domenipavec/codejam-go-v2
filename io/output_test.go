@@ -31,4 +31,10 @@ func TestOutput(t *testing.T) {
 	o.flush()
 	assert.Equal(t, "Case #3: test\n", string(b.Bytes()))
 	b.Reset()
+
+	o.Println("test", 1)
+	o.Println("test1")
+	o.flush()
+	assert.Equal(t, "Case #3: test 1\ntest1\n", string(b.Bytes()))
+	b.Reset()
 }

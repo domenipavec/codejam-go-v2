@@ -54,6 +54,10 @@ func (o *Output) Print(a ...interface{}) {
 	fmt.Fprint(o.output, a...)
 }
 
+func (o *Output) Println(a ...interface{}) {
+	fmt.Fprintln(o.output, a...)
+}
+
 func (o *Output) Printf(format string, a ...interface{}) {
 	fmt.Fprintf(o.output, format, a...)
 }

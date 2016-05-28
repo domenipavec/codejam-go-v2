@@ -37,6 +37,7 @@ Writes output after **Case #n:**, beginning space and trailing newline are provi
 
 Output to solution file:
 - **output.Print(...interface{})** - prints all, spaces are added between operands when neither is a string
+- **output.Println(...interface{})** - prints all, spaces are always added between operands and a newline is appended
 - **output.Printf(format, ...interface{})** - prints with format string
 
 Output to console:
@@ -129,6 +130,7 @@ Grid are a few wrapper functions around [][]int
 - **g.FillColTuple(i, tuple)** - fill i-th col with ints from tuple
 - **g.GetRow(i)** - get i-th row in new Slice
 - **g.GetCol(i)** - get i-th col in new Slice
+- **g.Print(sep)** - returns string, *sep* separated cols, rows in lines
 - **g.String()** - for direct output.Print, space separated cols, rows in lines
 - **g.GoString()** - nice output for Debugf, | separted cols, use with output.Debugf("%#v", g)
 
