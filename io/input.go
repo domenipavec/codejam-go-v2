@@ -4,9 +4,6 @@ import (
 	"log"
 	"math/big"
 	"strconv"
-
-	"github.com/matematik7/codejam-go/integer"
-	"github.com/matematik7/codejam-go/st"
 )
 
 type InputProvider interface {
@@ -94,40 +91,12 @@ func (i *Input) Digits() []int {
 	return ints
 }
 
-func (i *Input) SliceInt(n int) integer.Slice {
+func (i *Input) SliceInt(n int) []int {
 	ints := make([]int, 0, n)
 	for j := 0; j < n; j++ {
 		ints = append(ints, i.Int())
 	}
 	return ints
-}
-
-func (i *Input) SetInt(n int) *integer.Set {
-	return integer.NewSet(i.SliceInt(n)...)
-}
-
-func (i *Input) MultiSetInt(n int) *integer.MultiSet {
-	return integer.NewMultiSet(i.SliceInt(n)...)
-}
-
-func (i *Input) SliceTupleFromInts(n, m int) *st.SliceTuple {
-	return st.FromInts(m, i.SliceInt(n*m)...)
-}
-
-func (i *Input) SliceTupleFromFloats(n, m int) *st.SliceTuple {
-	return st.FromFloats(m, i.SliceFloat(n*m)...)
-}
-
-func (i *Input) SliceTupleFromStrings(n, m int) *st.SliceTuple {
-	return st.FromStrings(m, i.SliceString(n*m)...)
-}
-
-func (i *Input) GridInt(y, x int) integer.Grid {
-	grid := make([][]int, 0, y)
-	for j := 0; j < y; j++ {
-		grid = append(grid, i.SliceInt(x))
-	}
-	return grid
 }
 
 func (i *Input) SliceFloat(n int) []float64 {
@@ -136,14 +105,6 @@ func (i *Input) SliceFloat(n int) []float64 {
 		floats = append(floats, i.Float())
 	}
 	return floats
-}
-
-func (i *Input) GridFloat(y, x int) [][]float64 {
-	grid := make([][]float64, 0, y)
-	for j := 0; j < y; j++ {
-		grid = append(grid, i.SliceFloat(x))
-	}
-	return grid
 }
 
 func (i *Input) SliceString(n int) []string {

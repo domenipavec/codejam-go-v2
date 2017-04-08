@@ -1,8 +1,6 @@
 package main
 
-import (
-	"github.com/matematik7/codejam-go/io"
-)
+import "github.com/matematik7/codejam-go-v2/io"
 
 func main() {
 	io.TestCases(testCase)

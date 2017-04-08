@@ -6,8 +6,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/matematik7/codejam-go/integer"
-	"github.com/matematik7/codejam-go/st"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -59,58 +57,12 @@ func TestDigits(t *testing.T) {
 
 func TestSliceInt(t *testing.T) {
 	i := initInput("1 -123\n1000000")
-	assert.Equal(t, integer.Slice([]int{1, -123, 1000000}), i.SliceInt(3))
-}
-
-func TestSetInt(t *testing.T) {
-	i := initInput("1 -123\n1000000")
-	ms := i.SetInt(3)
-	assert.True(t, ms.ContainsAll(1, -123, 1000000))
-}
-
-func TestMultiSetInt(t *testing.T) {
-	i := initInput("1 -123\n1000000")
-	ms := i.MultiSetInt(3)
-	assert.True(t, ms.ContainsAll(1, -123, 1000000))
-}
-
-func TestSliceTupleFromInts(t *testing.T) {
-	i := initInput("1 -123\n1000000 2")
-	slt := i.SliceTupleFromInts(2, 2)
-	assert.Equal(t, 2, slt.Len())
-	assert.Equal(t, st.IntTuple(1, -123), slt.Tuples[0])
-	assert.Equal(t, st.IntTuple(1000000, 2), slt.Tuples[1])
-}
-
-func TestSliceTupleFromFloats(t *testing.T) {
-	i := initInput("1.1 -123.4\n1e6 2.3e-1")
-	slt := i.SliceTupleFromFloats(2, 2)
-	assert.Equal(t, 2, slt.Len())
-	assert.Equal(t, st.FloatTuple(1.1, -123.4), slt.Tuples[0])
-	assert.Equal(t, st.FloatTuple(1e6, 2.3e-1), slt.Tuples[1])
-}
-
-func TestSliceTupleFromStrings(t *testing.T) {
-	i := initInput("t1 t2\nt3 t4")
-	slt := i.SliceTupleFromStrings(2, 2)
-	assert.Equal(t, 2, slt.Len())
-	assert.Equal(t, st.StringTuple("t1", "t2"), slt.Tuples[0])
-	assert.Equal(t, st.StringTuple("t3", "t4"), slt.Tuples[1])
-}
-
-func TestGridInt(t *testing.T) {
-	i := initInput("1 2 3\n4 5 6")
-	assert.Equal(t, integer.Grid([][]int{[]int{1, 2, 3}, []int{4, 5, 6}}), i.GridInt(2, 3))
+	assert.Equal(t, []int{1, -123, 1000000}, i.SliceInt(3))
 }
 
 func TestSliceFloat(t *testing.T) {
 	i := initInput("1.0 -123.1\n1e15")
 	assert.Equal(t, []float64{1.0, -123.1, 1e15}, i.SliceFloat(3))
-}
-
-func TestGridFloat(t *testing.T) {
-	i := initInput("1.1 2.2 3.3\n4.4 5.5 6.6")
-	assert.Equal(t, [][]float64{[]float64{1.1, 2.2, 3.3}, []float64{4.4, 5.5, 6.6}}, i.GridFloat(2, 3))
 }
 
 func TestSliceString(t *testing.T) {
