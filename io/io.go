@@ -6,6 +6,9 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"os/user"
+	"path"
+	"path/filepath"
 	"runtime/pprof"
 	"strconv"
 	"strings"
@@ -38,13 +41,42 @@ func TestCases(f TestCaseFunc) {
 		f: f,
 	}
 
-	if len(os.Args) < 2 {
-		log.Fatalln("You need to specify at least one input file")
+	inputFile := ""
+	if len(os.Args) == 2 {
+		inputFile = os.Args[1]
+	} else {
+		usr, err := user.Current()
+		if err != nil {
+			log.Fatal(err)
+		}
+		downloadFiles, err := filepath.Glob(path.Join(usr.HomeDir, "Downloads/*.in"))
+		if err != nil {
+			log.Fatal(err)
+		}
+		if len(downloadFiles) > 1 {
+			log.Fatal("Multiple input files in Downloads")
+		} else if len(downloadFiles) == 1 {
+			inputFile = filepath.Base(downloadFiles[0])
+			os.Rename(downloadFiles[0], inputFile)
+		} else {
+			localFiles, err := filepath.Glob("*.in")
+			if err != nil {
+				log.Fatal(err)
+			}
+			if len(localFiles) > 1 {
+				log.Fatal("Multiple input files found, please specify one!")
+			} else if len(localFiles) == 1 {
+				inputFile = localFiles[0]
+			} else {
+				log.Fatal("No input files found")
+			}
+		}
 	}
-	for _, inputFn := range os.Args[1:] {
-		parser.SetFn(inputFn)
-		parser.ParseFile()
-	}
+
+	log.Println("Using input file:", inputFile)
+
+	parser.SetFn(inputFile)
+	parser.ParseFile()
 }
 
 func (parser *Parser) SetFn(inputFn string) {
