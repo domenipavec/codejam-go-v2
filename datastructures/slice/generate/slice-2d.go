@@ -32,6 +32,11 @@ func (slice SliceValueType) Less(i, j int) bool {
 	return false
 }
 
+// String is for print
+func (slice SliceValueType) String() string {
+	return slice.Print("\n")
+}
+
 // SpiralIterator returns []Coordinate in spiral order
 func (slice SliceValueType) SpiralIterator() []Coordinate {
 	data := make([]Coordinate, len(slice)*len(slice[0]))

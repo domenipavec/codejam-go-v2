@@ -69,12 +69,12 @@ func (slice *SliceValueType) Prepend(values ...ValueType) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceValueType) String() string {
+// Print prints using separator
+func (slice SliceValueType) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}

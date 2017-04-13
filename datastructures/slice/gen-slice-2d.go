@@ -34,6 +34,11 @@ func (slice SliceSliceInt) Less(i, j int) bool {
 	return false
 }
 
+// String is for print
+func (slice SliceSliceInt) String() string {
+	return slice.Print("\n")
+}
+
 // SpiralIterator returns []Coordinate in spiral order
 func (slice SliceSliceInt) SpiralIterator() []Coordinate {
 	data := make([]Coordinate, len(slice)*len(slice[0]))
@@ -68,6 +73,11 @@ func (slice SliceSliceFloat64) Less(i, j int) bool {
 		}
 	}
 	return false
+}
+
+// String is for print
+func (slice SliceSliceFloat64) String() string {
+	return slice.Print("\n")
 }
 
 // SpiralIterator returns []Coordinate in spiral order
@@ -106,6 +116,11 @@ func (slice SliceSliceString) Less(i, j int) bool {
 	return false
 }
 
+// String is for print
+func (slice SliceSliceString) String() string {
+	return slice.Print("\n")
+}
+
 // SpiralIterator returns []Coordinate in spiral order
 func (slice SliceSliceString) SpiralIterator() []Coordinate {
 	data := make([]Coordinate, len(slice)*len(slice[0]))
@@ -140,6 +155,11 @@ func (slice SliceSliceByte) Less(i, j int) bool {
 		}
 	}
 	return false
+}
+
+// String is for print
+func (slice SliceSliceByte) String() string {
+	return slice.Print("\n")
 }
 
 // SpiralIterator returns []Coordinate in spiral order

@@ -17,3 +17,8 @@ func (slice SliceValueType) Copy() SliceValueType {
 func (slice SliceValueType) Less(i, j int) bool {
 	return slice[i] < slice[j]
 }
+
+// String is for print
+func (slice SliceValueType) String() string {
+	return slice.Print(" ")
+}

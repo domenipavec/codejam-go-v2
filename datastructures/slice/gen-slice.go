@@ -71,12 +71,12 @@ func (slice *SliceInt) Prepend(values ...int) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceInt) String() string {
+// Print prints using separator
+func (slice SliceInt) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
@@ -222,12 +222,12 @@ func (slice *SliceSliceInt) Prepend(values ...SliceInt) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceSliceInt) String() string {
+// Print prints using separator
+func (slice SliceSliceInt) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
@@ -373,12 +373,12 @@ func (slice *SliceFloat64) Prepend(values ...float64) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceFloat64) String() string {
+// Print prints using separator
+func (slice SliceFloat64) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
@@ -524,12 +524,12 @@ func (slice *SliceSliceFloat64) Prepend(values ...SliceFloat64) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceSliceFloat64) String() string {
+// Print prints using separator
+func (slice SliceSliceFloat64) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
@@ -675,12 +675,12 @@ func (slice *SliceString) Prepend(values ...string) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceString) String() string {
+// Print prints using separator
+func (slice SliceString) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
@@ -826,12 +826,12 @@ func (slice *SliceSliceString) Prepend(values ...SliceString) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceSliceString) String() string {
+// Print prints using separator
+func (slice SliceSliceString) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
@@ -977,12 +977,12 @@ func (slice *SliceByte) Prepend(values ...byte) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceByte) String() string {
+// Print prints using separator
+func (slice SliceByte) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
@@ -1128,12 +1128,12 @@ func (slice *SliceSliceByte) Prepend(values ...SliceByte) {
 	*slice = append(values, (*slice)...)
 }
 
-// String is for print
-func (slice SliceSliceByte) String() string {
+// Print prints using separator
+func (slice SliceSliceByte) Print(sep string) string {
 	output := ""
 	for _, c := range slice {
 		if output != "" {
-			output += " "
+			output += sep
 		}
 		output += fmt.Sprintf("%v", c)
 	}
