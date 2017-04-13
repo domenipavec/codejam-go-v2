@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/matematik7/codejam-go-v2/datastructures/grid"
+	"github.com/matematik7/codejam-go-v2/datastructures/slice"
 )
 
 type InputProvider interface {
@@ -62,7 +62,7 @@ func (i *Input) Int() int {
 	return n
 }
 
-func (i *Input) Float() float64 {
+func (i *Input) Float64() float64 {
 	f, err := strconv.ParseFloat(i.String(), 64)
 	if err != nil {
 		log.Fatalln("Error scanning for float:", err)
@@ -93,23 +93,23 @@ func (i *Input) Digits() []int {
 	return ints
 }
 
-func (i *Input) SliceInt(n int) []int {
-	ints := make([]int, 0, n)
+func (i *Input) SliceInt(n int) slice.SliceInt {
+	newSlice := slice.NewSliceInt(n)
 	for j := 0; j < n; j++ {
-		ints = append(ints, i.Int())
+		newSlice[j] = i.Int()
 	}
-	return ints
+	return newSlice
 }
 
-func (i *Input) SliceFloat(n int) []float64 {
-	floats := make([]float64, 0, n)
+func (i *Input) SliceFloat64(n int) slice.SliceFloat64 {
+	newSlice := slice.NewSliceFloat64(n)
 	for j := 0; j < n; j++ {
-		floats = append(floats, i.Float())
+		newSlice[j] = i.Float64()
 	}
-	return floats
+	return newSlice
 }
 
-func (i *Input) SliceString(n int) []string {
+func (i *Input) SliceString(n int) slice.SliceString {
 	strs := make([]string, 0, n)
 	for j := 0; j < n; j++ {
 		strs = append(strs, i.String())
@@ -125,12 +125,32 @@ func (i *Input) SliceBytes(n int) [][]byte {
 	return sb
 }
 
-func (input *Input) GridInt(n, m int) grid.GridInt {
-	newGrid := grid.NewInt(n, m)
+func (input *Input) SliceSliceInt(n, m int) slice.SliceSliceInt {
+	newSlice := slice.NewSliceSliceInt(n, m)
 	for i := 0; i < n; i++ {
 		for j := 0; j < m; j++ {
-			newGrid[i][j] = input.Int()
+			newSlice[i][j] = input.Int()
 		}
 	}
-	return newGrid
+	return newSlice
+}
+
+func (input *Input) SliceSliceFloat64(n, m int) slice.SliceSliceFloat64 {
+	newSlice := slice.NewSliceSliceFloat64(n, m)
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			newSlice[i][j] = input.Float64()
+		}
+	}
+	return newSlice
+}
+
+func (input *Input) SliceSliceString(n, m int) slice.SliceSliceString {
+	newSlice := slice.NewSliceSliceString(n, m)
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			newSlice[i][j] = input.String()
+		}
+	}
+	return newSlice
 }
