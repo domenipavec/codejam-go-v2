@@ -4,6 +4,8 @@ import (
 	"log"
 	"math/big"
 	"strconv"
+
+	"github.com/matematik7/codejam-go-v2/datastructures/grid"
 )
 
 type InputProvider interface {
@@ -121,4 +123,14 @@ func (i *Input) SliceBytes(n int) [][]byte {
 		sb[j] = i.Bytes()
 	}
 	return sb
+}
+
+func (input *Input) GridInt(n, m int) grid.GridInt {
+	newGrid := grid.NewInt(n, m)
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			newGrid[i][j] = input.Int()
+		}
+	}
+	return newGrid
 }
