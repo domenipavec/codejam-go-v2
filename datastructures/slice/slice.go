@@ -9,7 +9,7 @@ import (
 
 //go:generate genny -in=$GOFILE -out=gen-$GOFILE gen "ValueType=byte,int8,int16,int32,int64,uint8,uint16,uint32,uint64,uint,int,float64"
 
-// ValueType genny generic type for grid
+// ValueType genny generic type for slice
 type ValueType generic.Number
 
 // SliceValueType type
