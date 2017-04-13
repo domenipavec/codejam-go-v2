@@ -34,6 +34,12 @@ func (slice SliceSliceInt) Less(i, j int) bool {
 	return false
 }
 
+// SpiralIterator returns []Coordinate in spiral order
+func (slice SliceSliceInt) SpiralIterator() []Coordinate {
+	data := make([]Coordinate, len(slice)*len(slice[0]))
+	return spiralTopRight(data, 0, 0, len(slice)-1, len(slice[0])-1)
+}
+
 // NewSliceSliceFloat64 creates slice length n
 func NewSliceSliceFloat64(n, m int) SliceSliceFloat64 {
 	newSlice := make([]SliceFloat64, n)
@@ -62,6 +68,12 @@ func (slice SliceSliceFloat64) Less(i, j int) bool {
 		}
 	}
 	return false
+}
+
+// SpiralIterator returns []Coordinate in spiral order
+func (slice SliceSliceFloat64) SpiralIterator() []Coordinate {
+	data := make([]Coordinate, len(slice)*len(slice[0]))
+	return spiralTopRight(data, 0, 0, len(slice)-1, len(slice[0])-1)
 }
 
 // NewSliceSliceString creates slice length n
@@ -94,6 +106,12 @@ func (slice SliceSliceString) Less(i, j int) bool {
 	return false
 }
 
+// SpiralIterator returns []Coordinate in spiral order
+func (slice SliceSliceString) SpiralIterator() []Coordinate {
+	data := make([]Coordinate, len(slice)*len(slice[0]))
+	return spiralTopRight(data, 0, 0, len(slice)-1, len(slice[0])-1)
+}
+
 // NewSliceSliceByte creates slice length n
 func NewSliceSliceByte(n, m int) SliceSliceByte {
 	newSlice := make([]SliceByte, n)
@@ -122,4 +140,10 @@ func (slice SliceSliceByte) Less(i, j int) bool {
 		}
 	}
 	return false
+}
+
+// SpiralIterator returns []Coordinate in spiral order
+func (slice SliceSliceByte) SpiralIterator() []Coordinate {
+	data := make([]Coordinate, len(slice)*len(slice[0]))
+	return spiralTopRight(data, 0, 0, len(slice)-1, len(slice[0])-1)
 }

@@ -31,3 +31,9 @@ func (slice SliceValueType) Less(i, j int) bool {
 	}
 	return false
 }
+
+// SpiralIterator returns []Coordinate in spiral order
+func (slice SliceValueType) SpiralIterator() []Coordinate {
+	data := make([]Coordinate, len(slice)*len(slice[0]))
+	return spiralTopRight(data, 0, 0, len(slice)-1, len(slice[0])-1)
+}
