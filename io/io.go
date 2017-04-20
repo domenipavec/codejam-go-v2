@@ -2,6 +2,8 @@ package io
 
 import (
 	"bufio"
+	"flag"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -26,6 +28,8 @@ type Parser struct {
 	output        *Output
 	compareOutput *CompareOutput
 
+	debugNumber *int
+
 	baseFn    string
 	inputFn   string
 	outputFn  string
@@ -37,12 +41,19 @@ func TestCases(f TestCaseFunc) {
 	log.SetFlags(0)
 
 	parser := Parser{
-		f: f,
+		f:           f,
+		debugNumber: flag.Int("d", -1, "Debug output only for this case"),
 	}
 
+	inputFileFlag := flag.String("i", "", "Input file")
+
+	flag.Parse()
+
 	inputFile := ""
-	if len(os.Args) == 2 {
-		inputFile = os.Args[1]
+	if *inputFileFlag != "" {
+		inputFile = *inputFileFlag
+	} else if len(flag.Args()) == 1 {
+		inputFile = flag.Args()[0]
 	} else {
 		usr, err := user.Current()
 		if err != nil {
@@ -69,6 +80,14 @@ func TestCases(f TestCaseFunc) {
 			} else {
 				log.Fatal("No input files found")
 			}
+		}
+	}
+
+	if !strings.HasSuffix(inputFile, ".in") {
+		if inputFile[len(inputFile)-1] != '.' {
+			inputFile += ".in"
+		} else {
+			inputFile += "in"
 		}
 	}
 
@@ -118,9 +137,19 @@ func (parser *Parser) ParseFile() {
 
 	T := parser.input.Int()
 
+	if *parser.debugNumber != -1 {
+		log.SetOutput(ioutil.Discard)
+	}
+
 	startTime := time.Now()
 	for i := 1; i <= T; i++ {
+		if *parser.debugNumber == i {
+			log.SetOutput(os.Stderr)
+		}
 		parser.runTestCase(i)
+		if *parser.debugNumber == i {
+			log.SetOutput(ioutil.Discard)
+		}
 	}
 
 	for key, timer := range parser.output.timers {
