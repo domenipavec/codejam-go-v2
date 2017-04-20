@@ -25,6 +25,8 @@ type Output struct {
 	prevPeriodicCount   int
 
 	points plotter.XYs
+
+	timers map[string]*Timer
 }
 
 func newOutput(w io.Writer) *Output {
@@ -32,6 +34,7 @@ func newOutput(w io.Writer) *Output {
 		w:             w,
 		output:        &bytes.Buffer{},
 		periodicPrint: make(chan struct{}, 10),
+		timers:        make(map[string]*Timer),
 	}
 }
 
@@ -202,4 +205,18 @@ func (o *Output) AssertTrue(a bool, fatal ...bool) {
 	if !a {
 		o.assertOutput(fatal, "Not true")
 	}
+}
+
+func (o *Output) TimerStart(key string) {
+	if o.timers[key] == nil {
+		o.timers[key] = &Timer{}
+	}
+	o.timers[key].Start()
+}
+
+func (o *Output) TimerStop(key string) {
+	if o.timers[key] == nil {
+		o.timers[key] = &Timer{}
+	}
+	o.timers[key].Stop()
 }

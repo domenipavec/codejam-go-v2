@@ -2,7 +2,6 @@ package io
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -87,20 +86,6 @@ func (parser *Parser) SetFn(inputFn string) {
 	parser.profileFn = parser.baseFn + ".prof"
 }
 
-func (parser *Parser) formatDuration(d int64) string {
-	var i int
-	df := float64(d)
-	units := []string{"ns", "us", "ms", "s"}
-	for i = 0; df >= 1000; i++ {
-		df /= 1000
-		if i >= 3 {
-			break
-		}
-	}
-	res := fmt.Sprintf("%.2f%s", df, units[i])
-	return res
-}
-
 func (parser *Parser) ParseFile() {
 	inputF, err := os.Open(parser.inputFn)
 	if err != nil {
@@ -133,11 +118,15 @@ func (parser *Parser) ParseFile() {
 
 	T := parser.input.Int()
 
-	startTime := time.Now().UnixNano()
+	startTime := time.Now()
 	for i := 1; i <= T; i++ {
 		parser.runTestCase(i)
 	}
-	log.Println("Total time:", parser.formatDuration(time.Now().UnixNano()-startTime))
+
+	for key, timer := range parser.output.timers {
+		log.Printf("Time for timer %s: %v", key, timer.Total)
+	}
+	log.Println("Total time:", time.Now().Sub(startTime))
 }
 
 func (parser *Parser) runTestCase(i int) {
