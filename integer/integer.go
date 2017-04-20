@@ -37,7 +37,7 @@ func Abs(a int) int {
 	return a
 }
 
-func Ceil(a, b int) int {
+func CeilDiv(a, b int) int {
 	if a == 0 {
 		return 0
 	}
@@ -108,4 +108,19 @@ func Log10(a int) int {
 
 func Log2(a int) int {
 	return int(math.Log2(float64(a)))
+}
+
+func Round(f float64) int {
+	if math.Abs(f) < 0.5 {
+		return 0
+	}
+	return int(f + math.Copysign(0.5, f))
+}
+
+func Floor(f float64) int {
+	return int(math.Floor(f))
+}
+
+func Ceil(f float64) int {
+	return int(math.Ceil(f))
 }
