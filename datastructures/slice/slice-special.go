@@ -27,3 +27,19 @@ func (slice SliceSliceFloat64) PrefixIndex() {
 		slice[i].Prepend(float64(i))
 	}
 }
+
+func (slice SliceBool) Less(i, j int) bool {
+	return !slice[i]
+}
+
+func (slice SliceSliceBool) Less(i, j int) bool {
+	for k := range slice[i] {
+		if !slice[i][k] {
+			return true
+		}
+		if !slice[j][k] {
+			return false
+		}
+	}
+	return false
+}

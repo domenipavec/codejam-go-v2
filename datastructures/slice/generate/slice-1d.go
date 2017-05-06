@@ -1,6 +1,6 @@
 package slice
 
-//go:generate genny -in=$GOFILE -out=../gen-$GOFILE gen "ValueType=int,float64,string,byte"
+//go:generate genny -in=$GOFILE -out=../gen-$GOFILE gen "ValueType=int,float64,string,byte,bool"
 
 // NewSliceValueType creates slice length n
 func NewSliceValueType(n int) SliceValueType {
@@ -12,10 +12,6 @@ func (slice SliceValueType) Copy() SliceValueType {
 	newSlice := NewSliceValueType(len(slice))
 	copy(newSlice, slice)
 	return newSlice
-}
-
-func (slice SliceValueType) Less(i, j int) bool {
-	return slice[i] < slice[j]
 }
 
 // String is for print

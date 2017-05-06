@@ -16,10 +16,6 @@ func (slice SliceInt) Copy() SliceInt {
 	return newSlice
 }
 
-func (slice SliceInt) Less(i, j int) bool {
-	return slice[i] < slice[j]
-}
-
 // String is for print
 func (slice SliceInt) String() string {
 	return slice.Print(" ")
@@ -35,10 +31,6 @@ func (slice SliceFloat64) Copy() SliceFloat64 {
 	newSlice := NewSliceFloat64(len(slice))
 	copy(newSlice, slice)
 	return newSlice
-}
-
-func (slice SliceFloat64) Less(i, j int) bool {
-	return slice[i] < slice[j]
 }
 
 // String is for print
@@ -58,10 +50,6 @@ func (slice SliceString) Copy() SliceString {
 	return newSlice
 }
 
-func (slice SliceString) Less(i, j int) bool {
-	return slice[i] < slice[j]
-}
-
 // String is for print
 func (slice SliceString) String() string {
 	return slice.Print(" ")
@@ -79,11 +67,24 @@ func (slice SliceByte) Copy() SliceByte {
 	return newSlice
 }
 
-func (slice SliceByte) Less(i, j int) bool {
-	return slice[i] < slice[j]
+// String is for print
+func (slice SliceByte) String() string {
+	return slice.Print(" ")
+}
+
+// NewSliceBool creates slice length n
+func NewSliceBool(n int) SliceBool {
+	return make([]bool, n)
+}
+
+// Copy makes a new independent copy of slice
+func (slice SliceBool) Copy() SliceBool {
+	newSlice := NewSliceBool(len(slice))
+	copy(newSlice, slice)
+	return newSlice
 }
 
 // String is for print
-func (slice SliceByte) String() string {
+func (slice SliceBool) String() string {
 	return slice.Print(" ")
 }

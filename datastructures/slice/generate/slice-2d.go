@@ -1,6 +1,6 @@
 package slice
 
-//go:generate genny -in=$GOFILE -out=../gen-$GOFILE gen "ValueType=SliceInt,SliceFloat64,SliceString,SliceByte"
+//go:generate genny -in=$GOFILE -out=../gen-$GOFILE gen "ValueType=SliceInt,SliceFloat64,SliceString,SliceByte,SliceBool"
 
 // NewSliceValueType creates slice length n
 func NewSliceValueType(n, m int) SliceValueType {
@@ -18,18 +18,6 @@ func (slice SliceValueType) Copy() SliceValueType {
 		newSlice[i] = slice[i].Copy()
 	}
 	return newSlice
-}
-
-func (slice SliceValueType) Less(i, j int) bool {
-	for k := range slice[i] {
-		if slice[i][k] < slice[j][k] {
-			return true
-		}
-		if slice[i][k] > slice[j][k] {
-			return false
-		}
-	}
-	return false
 }
 
 // String is for print

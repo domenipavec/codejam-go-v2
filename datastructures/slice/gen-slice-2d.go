@@ -22,18 +22,6 @@ func (slice SliceSliceInt) Copy() SliceSliceInt {
 	return newSlice
 }
 
-func (slice SliceSliceInt) Less(i, j int) bool {
-	for k := range slice[i] {
-		if slice[i][k] < slice[j][k] {
-			return true
-		}
-		if slice[i][k] > slice[j][k] {
-			return false
-		}
-	}
-	return false
-}
-
 // String is for print
 func (slice SliceSliceInt) String() string {
 	return slice.Print("\n")
@@ -61,18 +49,6 @@ func (slice SliceSliceFloat64) Copy() SliceSliceFloat64 {
 		newSlice[i] = slice[i].Copy()
 	}
 	return newSlice
-}
-
-func (slice SliceSliceFloat64) Less(i, j int) bool {
-	for k := range slice[i] {
-		if slice[i][k] < slice[j][k] {
-			return true
-		}
-		if slice[i][k] > slice[j][k] {
-			return false
-		}
-	}
-	return false
 }
 
 // String is for print
@@ -104,18 +80,6 @@ func (slice SliceSliceString) Copy() SliceSliceString {
 	return newSlice
 }
 
-func (slice SliceSliceString) Less(i, j int) bool {
-	for k := range slice[i] {
-		if slice[i][k] < slice[j][k] {
-			return true
-		}
-		if slice[i][k] > slice[j][k] {
-			return false
-		}
-	}
-	return false
-}
-
 // String is for print
 func (slice SliceSliceString) String() string {
 	return slice.Print("\n")
@@ -145,18 +109,6 @@ func (slice SliceSliceByte) Copy() SliceSliceByte {
 	return newSlice
 }
 
-func (slice SliceSliceByte) Less(i, j int) bool {
-	for k := range slice[i] {
-		if slice[i][k] < slice[j][k] {
-			return true
-		}
-		if slice[i][k] > slice[j][k] {
-			return false
-		}
-	}
-	return false
-}
-
 // String is for print
 func (slice SliceSliceByte) String() string {
 	return slice.Print("\n")
@@ -164,6 +116,35 @@ func (slice SliceSliceByte) String() string {
 
 // SpiralIterator returns []Coordinate in spiral order
 func (slice SliceSliceByte) SpiralIterator() []Coordinate {
+	data := make([]Coordinate, len(slice)*len(slice[0]))
+	return spiralTopRight(data, 0, 0, len(slice)-1, len(slice[0])-1)
+}
+
+// NewSliceSliceBool creates slice length n
+func NewSliceSliceBool(n, m int) SliceSliceBool {
+	newSlice := make([]SliceBool, n)
+	for i := range newSlice {
+		newSlice[i] = NewSliceBool(m)
+	}
+	return newSlice
+}
+
+// Copy makes a new independent copy of slice
+func (slice SliceSliceBool) Copy() SliceSliceBool {
+	newSlice := make([]SliceBool, len(slice))
+	for i := range newSlice {
+		newSlice[i] = slice[i].Copy()
+	}
+	return newSlice
+}
+
+// String is for print
+func (slice SliceSliceBool) String() string {
+	return slice.Print("\n")
+}
+
+// SpiralIterator returns []Coordinate in spiral order
+func (slice SliceSliceBool) SpiralIterator() []Coordinate {
 	data := make([]Coordinate, len(slice)*len(slice[0]))
 	return spiralTopRight(data, 0, 0, len(slice)-1, len(slice[0])-1)
 }

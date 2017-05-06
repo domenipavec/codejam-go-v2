@@ -6,7 +6,7 @@ import (
 	"sort"
 )
 
-//go:generate genny -in=$GOFILE -out=../gen-$GOFILE gen "ValueType=int,SliceInt,float64,SliceFloat64,string,SliceString,byte,SliceByte"
+//go:generate genny -in=$GOFILE -out=../gen-$GOFILE gen "ValueType=int,SliceInt,float64,SliceFloat64,string,SliceString,byte,SliceByte,bool,SliceBool"
 
 // SliceValueType type
 type SliceValueType []ValueType

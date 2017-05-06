@@ -1217,3 +1217,305 @@ func (hp MaxHeapSliceSliceByte) Push(v SliceByte) {
 func (hp MaxHeapSliceSliceByte) Remove(i int) SliceByte {
 	return heap.Remove(HeapReverse(hp.Slice), i).(SliceByte)
 }
+
+// SliceBool type
+type SliceBool []bool
+
+// Set sets all element to c
+func (slice SliceBool) Set(c bool) {
+	for i := 0; i < len(slice); i++ {
+		slice[i] = c
+	}
+}
+
+// SortAsc sort ascending
+func (slice SliceBool) SortAsc() {
+	sort.Sort(slice)
+}
+
+// SortDesc sort descending
+func (slice SliceBool) SortDesc() {
+	sort.Sort(sort.Reverse(slice))
+}
+
+// Len length
+func (slice SliceBool) Len() int {
+	return len(slice)
+}
+
+// Get i-th element
+func (slice SliceBool) Get(i int) bool {
+	if i < 0 {
+		i += len(slice)
+	}
+
+	return slice[i]
+}
+
+// Swap two elements
+func (slice SliceBool) Swap(i, j int) {
+	slice[i], slice[j] = slice[j], slice[i]
+}
+
+// Push element
+func (slice *SliceBool) Push(c interface{}) {
+	*slice = append(*slice, c.(bool))
+}
+
+// Pop element
+func (slice *SliceBool) Pop() interface{} {
+	element := slice.Get(-1)
+	*slice = (*slice)[:len(*slice)-1]
+	return element
+}
+
+// Append values
+func (slice *SliceBool) Append(values ...bool) {
+	*slice = append(*slice, values...)
+}
+
+// Prepend values
+func (slice *SliceBool) Prepend(values ...bool) {
+	*slice = append(values, (*slice)...)
+}
+
+// Print prints using separator
+func (slice SliceBool) Print(sep string) string {
+	output := ""
+	for _, c := range slice {
+		if output != "" {
+			output += sep
+		}
+		output += fmt.Sprintf("%v", c)
+	}
+	return output
+}
+
+// MinHeapSliceBool struct for min heap
+type MinHeapSliceBool struct {
+	Slice *SliceBool
+}
+
+// MinHeap returns struct with min heap functionality based on SliceBool
+func (slice *SliceBool) MinHeap() MinHeapSliceBool {
+	hp := MinHeapSliceBool{
+		Slice: slice,
+	}
+	heap.Init(hp.Slice)
+	return hp
+}
+
+// Min returns min element
+func (hp MinHeapSliceBool) Min() bool {
+	return (*hp.Slice)[0]
+}
+
+// Fix re-establishes heap ordering after i has changed value
+func (hp MinHeapSliceBool) Fix(i int) {
+	heap.Fix(hp.Slice, i)
+}
+
+// Pop removes the minimum element
+func (hp MinHeapSliceBool) Pop() bool {
+	return heap.Pop(hp.Slice).(bool)
+}
+
+// Push v to heap
+func (hp MinHeapSliceBool) Push(v bool) {
+	heap.Push(hp.Slice, v)
+}
+
+// Remove i-th element
+func (hp MinHeapSliceBool) Remove(i int) bool {
+	return heap.Remove(hp.Slice, i).(bool)
+}
+
+// MaxHeapSliceBool struct for max heap
+type MaxHeapSliceBool struct {
+	Slice *SliceBool
+}
+
+// MaxHeap returns struct with max heap functionality based on SliceBool
+func (slice *SliceBool) MaxHeap() MaxHeapSliceBool {
+	hp := MaxHeapSliceBool{
+		Slice: slice,
+	}
+	heap.Init(HeapReverse(hp.Slice))
+	return hp
+}
+
+// Max returns max element
+func (hp MaxHeapSliceBool) Max() bool {
+	return (*hp.Slice)[0]
+}
+
+// Fix re-establishes heap ordering after i has changed value
+func (hp MaxHeapSliceBool) Fix(i int) {
+	heap.Fix(HeapReverse(hp.Slice), i)
+}
+
+// Pop removes the minimum element
+func (hp MaxHeapSliceBool) Pop() bool {
+	return heap.Pop(HeapReverse(hp.Slice)).(bool)
+}
+
+// Push v to heap
+func (hp MaxHeapSliceBool) Push(v bool) {
+	heap.Push(HeapReverse(hp.Slice), v)
+}
+
+// Remove i-th element
+func (hp MaxHeapSliceBool) Remove(i int) bool {
+	return heap.Remove(HeapReverse(hp.Slice), i).(bool)
+}
+
+// SliceSliceBool type
+type SliceSliceBool []SliceBool
+
+// Set sets all element to c
+func (slice SliceSliceBool) Set(c SliceBool) {
+	for i := 0; i < len(slice); i++ {
+		slice[i] = c
+	}
+}
+
+// SortAsc sort ascending
+func (slice SliceSliceBool) SortAsc() {
+	sort.Sort(slice)
+}
+
+// SortDesc sort descending
+func (slice SliceSliceBool) SortDesc() {
+	sort.Sort(sort.Reverse(slice))
+}
+
+// Len length
+func (slice SliceSliceBool) Len() int {
+	return len(slice)
+}
+
+// Get i-th element
+func (slice SliceSliceBool) Get(i int) SliceBool {
+	if i < 0 {
+		i += len(slice)
+	}
+
+	return slice[i]
+}
+
+// Swap two elements
+func (slice SliceSliceBool) Swap(i, j int) {
+	slice[i], slice[j] = slice[j], slice[i]
+}
+
+// Push element
+func (slice *SliceSliceBool) Push(c interface{}) {
+	*slice = append(*slice, c.(SliceBool))
+}
+
+// Pop element
+func (slice *SliceSliceBool) Pop() interface{} {
+	element := slice.Get(-1)
+	*slice = (*slice)[:len(*slice)-1]
+	return element
+}
+
+// Append values
+func (slice *SliceSliceBool) Append(values ...SliceBool) {
+	*slice = append(*slice, values...)
+}
+
+// Prepend values
+func (slice *SliceSliceBool) Prepend(values ...SliceBool) {
+	*slice = append(values, (*slice)...)
+}
+
+// Print prints using separator
+func (slice SliceSliceBool) Print(sep string) string {
+	output := ""
+	for _, c := range slice {
+		if output != "" {
+			output += sep
+		}
+		output += fmt.Sprintf("%v", c)
+	}
+	return output
+}
+
+// MinHeapSliceSliceBool struct for min heap
+type MinHeapSliceSliceBool struct {
+	Slice *SliceSliceBool
+}
+
+// MinHeap returns struct with min heap functionality based on SliceSliceBool
+func (slice *SliceSliceBool) MinHeap() MinHeapSliceSliceBool {
+	hp := MinHeapSliceSliceBool{
+		Slice: slice,
+	}
+	heap.Init(hp.Slice)
+	return hp
+}
+
+// Min returns min element
+func (hp MinHeapSliceSliceBool) Min() SliceBool {
+	return (*hp.Slice)[0]
+}
+
+// Fix re-establishes heap ordering after i has changed value
+func (hp MinHeapSliceSliceBool) Fix(i int) {
+	heap.Fix(hp.Slice, i)
+}
+
+// Pop removes the minimum element
+func (hp MinHeapSliceSliceBool) Pop() SliceBool {
+	return heap.Pop(hp.Slice).(SliceBool)
+}
+
+// Push v to heap
+func (hp MinHeapSliceSliceBool) Push(v SliceBool) {
+	heap.Push(hp.Slice, v)
+}
+
+// Remove i-th element
+func (hp MinHeapSliceSliceBool) Remove(i int) SliceBool {
+	return heap.Remove(hp.Slice, i).(SliceBool)
+}
+
+// MaxHeapSliceSliceBool struct for max heap
+type MaxHeapSliceSliceBool struct {
+	Slice *SliceSliceBool
+}
+
+// MaxHeap returns struct with max heap functionality based on SliceSliceBool
+func (slice *SliceSliceBool) MaxHeap() MaxHeapSliceSliceBool {
+	hp := MaxHeapSliceSliceBool{
+		Slice: slice,
+	}
+	heap.Init(HeapReverse(hp.Slice))
+	return hp
+}
+
+// Max returns max element
+func (hp MaxHeapSliceSliceBool) Max() SliceBool {
+	return (*hp.Slice)[0]
+}
+
+// Fix re-establishes heap ordering after i has changed value
+func (hp MaxHeapSliceSliceBool) Fix(i int) {
+	heap.Fix(HeapReverse(hp.Slice), i)
+}
+
+// Pop removes the minimum element
+func (hp MaxHeapSliceSliceBool) Pop() SliceBool {
+	return heap.Pop(HeapReverse(hp.Slice)).(SliceBool)
+}
+
+// Push v to heap
+func (hp MaxHeapSliceSliceBool) Push(v SliceBool) {
+	heap.Push(HeapReverse(hp.Slice), v)
+}
+
+// Remove i-th element
+func (hp MaxHeapSliceSliceBool) Remove(i int) SliceBool {
+	return heap.Remove(HeapReverse(hp.Slice), i).(SliceBool)
+}
