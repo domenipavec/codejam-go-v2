@@ -69,7 +69,7 @@ Useful function for integers
 - **integer.Min(...int)** - returns minimal from the given ints
 - **integer.Max(...int)** - returns maximal from the given ints
 - **integer.Abs(a)** - returns absolute value of a
-- **integer.Ceil(a, b)** - divides a by b and rounds the result up
+- **integer.CeilDiv(a, b)** - divides a by b and rounds the result up
 - **integer.Range(max)** - python style range, return slice of ints from *0* to *max-1*
 - **integer.Range(min,max)** - python style range, return slice of ints from *min* to *max-1*
 - **integer.Range(min,max,step)** - python style range, return slice of ints from *min* to *max-1* with step spacing
