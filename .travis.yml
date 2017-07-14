@@ -6,4 +6,5 @@ go:
   - 1.6
   - tip
 
+install: go get $(go list ./... | grep -v generate)
 script: go test $(go list ./... | grep -v generate)
