@@ -2,11 +2,10 @@
 
 Some helper stuff for codejam competition in go version 2. See example.
 
-To enable pprof images install:
-```
-sudo apt-get install graphviz
-```
+## Options
 
+- -d Debug output only for this case (default -1)
+- -i Input file (needed when using -d)
 
 ## input
 
