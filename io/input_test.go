@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/matematik7/codejam-go-v2/datastructures/slice"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -38,9 +39,9 @@ func TestInt(t *testing.T) {
 
 func TestFloat(t *testing.T) {
 	i := initInput("1.0 -123.1\n1e15")
-	assert.Equal(t, 1.0, i.Float())
-	assert.Equal(t, -123.1, i.Float())
-	assert.Equal(t, 1e15, i.Float())
+	assert.Equal(t, 1.0, i.Float64())
+	assert.Equal(t, -123.1, i.Float64())
+	assert.Equal(t, 1e15, i.Float64())
 }
 
 func TestBigInt(t *testing.T) {
@@ -57,15 +58,15 @@ func TestDigits(t *testing.T) {
 
 func TestSliceInt(t *testing.T) {
 	i := initInput("1 -123\n1000000")
-	assert.Equal(t, []int{1, -123, 1000000}, i.SliceInt(3))
+	assert.Equal(t, slice.SliceInt([]int{1, -123, 1000000}), i.SliceInt(3))
 }
 
 func TestSliceFloat(t *testing.T) {
 	i := initInput("1.0 -123.1\n1e15")
-	assert.Equal(t, []float64{1.0, -123.1, 1e15}, i.SliceFloat(3))
+	assert.Equal(t, slice.SliceFloat64([]float64{1.0, -123.1, 1e15}), i.SliceFloat64(3))
 }
 
 func TestSliceString(t *testing.T) {
 	i := initInput("input1 input2\ninput3")
-	assert.Equal(t, []string{"input1", "input2", "input3"}, i.SliceString(3))
+	assert.Equal(t, slice.SliceString([]string{"input1", "input2", "input3"}), i.SliceString(3))
 }

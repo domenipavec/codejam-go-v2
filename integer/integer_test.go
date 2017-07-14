@@ -35,14 +35,14 @@ func TestAbs(t *testing.T) {
 	assert.Equal(t, 0, Abs(0))
 }
 
-func TestCeil(t *testing.T) {
-	assert.Equal(t, 1, Ceil(5, 5))
-	assert.Equal(t, 2, Ceil(6, 5))
-	assert.Equal(t, 2, Ceil(8, 5))
-	assert.Equal(t, 2, Ceil(10, 5))
-	assert.Equal(t, 3, Ceil(11, 5))
-	assert.Equal(t, 0, Ceil(0, 2))
-	assert.Equal(t, 1, Ceil(1, 2))
+func TestCeilDiv(t *testing.T) {
+	assert.Equal(t, 1, CeilDiv(5, 5))
+	assert.Equal(t, 2, CeilDiv(6, 5))
+	assert.Equal(t, 2, CeilDiv(8, 5))
+	assert.Equal(t, 2, CeilDiv(10, 5))
+	assert.Equal(t, 3, CeilDiv(11, 5))
+	assert.Equal(t, 0, CeilDiv(0, 2))
+	assert.Equal(t, 1, CeilDiv(1, 2))
 }
 
 func TestRange(t *testing.T) {
