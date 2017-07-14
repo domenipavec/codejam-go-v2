@@ -81,6 +81,19 @@ Useful function for integers
 - **integer.Floor(f)** - floor float to int
 - **integer.Ceil(f)** - ceil float to int
 
+### modulo
+
+- **mod.New(v)** - create new modulo integer value v
+- **m.Inc()** - increase by 1
+- **m.Dec()** - decrease by 1
+- **m.Add(...v)** - add v(s) to m
+- **m.Sub(...v)** - subtract v(s) from m
+- **m.Mul(...v)** - multiply m with v(s)
+- **m.Div(v)** - modulo divide by multiplying with inverse (modulo is prime)
+- **m.Exp(v)** - logarithmic exponentiation, supports negative exponents
+- **m.Value()** - integer value
+- **m.String()** - string representation used for print
+
 ## Set
 
 - **set.NewValueType()** - create new set for ValueType
