@@ -6,11 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
 	"os/user"
 	"path"
 	"path/filepath"
-	"runtime/pprof"
 	"strconv"
 	"strings"
 	"time"
@@ -159,9 +157,7 @@ func (parser *Parser) ParseFile() {
 }
 
 func (parser *Parser) runTestCase(i int) {
-	warningTimer := time.NewTimer(500 * time.Millisecond)
-	startProfileTimer := time.NewTimer(1 * time.Second)
-	stopProfileTimer := time.NewTimer(10 * time.Second)
+	warningTimer := time.NewTimer(1 * time.Second)
 	periodicPrintTicker := time.NewTicker(1 * time.Second)
 
 	doneChan := make(chan bool)
@@ -181,33 +177,11 @@ func (parser *Parser) runTestCase(i int) {
 		doneChan <- true
 	}()
 
-	var f *os.File
-	var err error
-
 loop:
 	for {
 		select {
 		case <-warningTimer.C:
 			parser.output.Debug("Long calculation")
-		case <-startProfileTimer.C:
-			f, err = os.Create(parser.profileFn)
-			if err != nil {
-				log.Fatalln("Error opening profile file:", err)
-			}
-			pprof.StartCPUProfile(f)
-		case <-stopProfileTimer.C:
-			pprof.StopCPUProfile()
-			f = nil
-			out, err := exec.Command("go", "tool", "pprof", "-top", os.Args[0], parser.profileFn).CombinedOutput()
-			if err != nil {
-				log.Fatalln("Error running profile tool:", err)
-			}
-			parser.output.Debug("CPUProfile:", string(out))
-
-			err = exec.Command("go", "tool", "pprof", "-web", os.Args[0], parser.profileFn).Start()
-			if err != nil {
-				log.Fatalln("Error running profile tool:", err)
-			}
 		case <-periodicPrintTicker.C:
 			parser.output.triggerPeriodic()
 		case <-doneChan:
@@ -217,9 +191,6 @@ loop:
 
 	periodicPrintTicker.Stop()
 	parser.output.resetPeriodic()
-	if f != nil {
-		pprof.StopCPUProfile()
-	}
 }
 
 func (parser *Parser) writeChart(i int) {
