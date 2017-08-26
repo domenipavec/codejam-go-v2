@@ -81,7 +81,7 @@ Useful function for integers
 - **integer.Floor(f)** - floor float to int
 - **integer.Ceil(f)** - ceil float to int
 
-### modulo
+### modulo (1000000007)
 
 - **mod.New(v)** - create new modulo integer value v
 - **m.Inc()** - increase by 1
