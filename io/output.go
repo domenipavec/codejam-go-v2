@@ -57,6 +57,10 @@ func (o *Output) Print(a ...interface{}) {
 	fmt.Fprint(o.output, a...)
 }
 
+func (o *Output) PrintFloat64(a float64) {
+	fmt.Fprintf(o.output, "%f", a)
+}
+
 func (o *Output) Println(a ...interface{}) {
 	fmt.Fprintln(o.output, a...)
 }
