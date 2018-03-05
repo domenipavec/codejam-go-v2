@@ -3,6 +3,7 @@ package integer
 import (
 	"log"
 	"math"
+	"math/bits"
 )
 
 const (
@@ -102,12 +103,16 @@ func Pow(a, b int) int {
 	return int(math.Pow(float64(a), float64(b)))
 }
 
+func Pow2(a int) int {
+	return 1 << uint(a)
+}
+
 func Log10(a int) int {
 	return int(math.Log10(float64(a)))
 }
 
 func Log2(a int) int {
-	return int(math.Log2(float64(a)))
+	return bits.Len(uint(a)) - 1
 }
 
 func Round(f float64) int {
