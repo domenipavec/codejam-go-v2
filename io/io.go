@@ -3,6 +3,7 @@ package io
 import (
 	"bufio"
 	"flag"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -116,10 +117,15 @@ func (parser *Parser) ParseFile() {
 	}
 	defer outputF.Close()
 
+	var outputWriter io.Writer = outputF
+	if parser.inputFn == "example.in" {
+		outputWriter = io.MultiWriter(outputF, os.Stdout)
+	}
+
 	scanner := bufio.NewScanner(inputF)
 	scanner.Split(bufio.ScanWords)
 
-	parser.output = newOutput(outputF)
+	parser.output = newOutput(outputWriter)
 	parser.input = newInput(scanner)
 
 	parser.compareOutput = nil
