@@ -211,6 +211,12 @@ func (o *Output) AssertTrue(a bool, fatal ...bool) {
 	}
 }
 
+func (o *Output) AssertNoError(e error, fatal ...bool) {
+	if e != nil {
+		o.assertOutputf(fatal, "Error: %v", e)
+	}
+}
+
 func (o *Output) TimerStart(key string) {
 	if o.timers[key] == nil {
 		o.timers[key] = &Timer{}
