@@ -8,7 +8,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/gonum/plot/plotter"
+	"gonum.org/v1/plot/plotter"
 )
 
 type Output struct {

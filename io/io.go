@@ -14,9 +14,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gonum/plot"
-	"github.com/gonum/plot/plotutil"
-	"github.com/gonum/plot/vg"
+	"gonum.org/v1/plot"
+	"gonum.org/v1/plot/plotutil"
+	"gonum.org/v1/plot/vg"
 )
 
 type TestCaseFunc func(*Input, *Output)
