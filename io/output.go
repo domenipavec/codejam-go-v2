@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"strings"
+	"time"
 	"unicode"
 
 	"gonum.org/v1/plot/plotter"
@@ -26,7 +27,8 @@ type Output struct {
 
 	points plotter.XYs
 
-	timers map[string]*Timer
+	startTime time.Time
+	timers    map[string]*Timer
 }
 
 func newOutput(w io.Writer) *Output {
@@ -228,5 +230,5 @@ func (o *Output) TimerStop(key string) {
 	if o.timers[key] == nil {
 		o.timers[key] = &Timer{}
 	}
-	o.timers[key].Stop()
+	o.timers[key].Stop(o.startTime)
 }

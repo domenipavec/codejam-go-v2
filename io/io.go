@@ -150,6 +150,7 @@ func (parser *Parser) ParseFile() {
 		if *parser.debugNumber == i {
 			log.SetOutput(os.Stderr)
 		}
+		parser.output.startTime = time.Now()
 		parser.runTestCase(i)
 		if *parser.debugNumber == i {
 			log.SetOutput(ioutil.Discard)
@@ -157,7 +158,7 @@ func (parser *Parser) ParseFile() {
 	}
 
 	for key, timer := range parser.output.timers {
-		log.Printf("Time for timer %s: %v", key, timer.Total)
+		log.Printf("Timer %s: %v", key, timer.Total)
 	}
 	log.Println("Total time:", time.Now().Sub(startTime))
 }
