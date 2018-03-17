@@ -4,21 +4,29 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/matematik7/codejam-go-v2/datastructures/intset"
 	"github.com/matematik7/codejam-go-v2/datastructures/queue"
 	"github.com/matematik7/codejam-go-v2/datastructures/slice"
+	"github.com/matematik7/codejam-go-v2/integer"
 )
 
 type Graph struct {
 	N        int
-	OutEdges [][]int
-	InEdges  [][]int
+	OutEdges [][]Edge
+	InEdges  [][]Edge
+}
+
+type Edge struct {
+	From   int
+	To     int
+	Weight int
 }
 
 func New(N int) Graph {
 	return Graph{
 		N:        N,
-		OutEdges: make([][]int, N),
-		InEdges:  make([][]int, N),
+		OutEdges: make([][]Edge, N),
+		InEdges:  make([][]Edge, N),
 	}
 }
 
@@ -33,8 +41,11 @@ func (g Graph) StringOutEdges() string {
 			output += "\n"
 		}
 		output += fmt.Sprintf("%d:", i)
-		for _, neighbor := range g.OutEdges[i] {
-			output += fmt.Sprintf(" %d", neighbor)
+		for _, edge := range g.OutEdges[i] {
+			output += fmt.Sprintf(" %d", edge.To)
+			if edge.Weight != 0 {
+				output += fmt.Sprintf("(%d)", edge.Weight)
+			}
 		}
 	}
 	return output
@@ -47,21 +58,30 @@ func (g Graph) StringInEdges() string {
 			output += "\n"
 		}
 		output += fmt.Sprintf("%d:", i)
-		for _, neighbor := range g.InEdges[i] {
-			output += fmt.Sprintf(" %d", neighbor)
+		for _, edge := range g.InEdges[i] {
+			output += fmt.Sprintf(" %d", edge.From)
 		}
 	}
 	return output
 }
 
-func (g Graph) AddEdge(u, v int) {
-	g.OutEdges[u] = append(g.OutEdges[u], v)
-	g.InEdges[v] = append(g.InEdges[v], u)
+func (g Graph) AddEdge(u, v int, w ...int) {
+	weight := 0
+	if len(w) > 0 {
+		weight = w[0]
+	}
+	edge := Edge{
+		From:   u,
+		To:     v,
+		Weight: weight,
+	}
+	g.OutEdges[u] = append(g.OutEdges[u], edge)
+	g.InEdges[v] = append(g.InEdges[v], edge)
 }
 
-func (g Graph) AddBiEdge(u, v int) {
-	g.AddEdge(u, v)
-	g.AddEdge(v, u)
+func (g Graph) AddBiEdge(u, v int, w ...int) {
+	g.AddEdge(u, v, w...)
+	g.AddEdge(v, u, w...)
 }
 
 func (g Graph) TopologicalSort() ([]int, error) {
@@ -82,10 +102,10 @@ func (g Graph) TopologicalSort() ([]int, error) {
 		visited += 1
 		order = append(order, v)
 
-		for _, neighbor := range g.OutEdges[v] {
-			inDegrees[neighbor]--
-			if inDegrees[neighbor] == 0 {
-				q.Push(neighbor)
+		for _, edge := range g.OutEdges[v] {
+			inDegrees[edge.To]--
+			if inDegrees[edge.To] == 0 {
+				q.Push(edge.To)
 			}
 		}
 	}
@@ -116,10 +136,10 @@ func (g Graph) MinTopologicalSort() ([]int, error) {
 		visited += 1
 		order = append(order, v)
 
-		for _, neighbor := range g.OutEdges[v] {
-			inDegrees[neighbor]--
-			if inDegrees[neighbor] == 0 {
-				q.Push(neighbor)
+		for _, edge := range g.OutEdges[v] {
+			inDegrees[edge.To]--
+			if inDegrees[edge.To] == 0 {
+				q.Push(edge.To)
 			}
 		}
 	}
@@ -129,4 +149,49 @@ func (g Graph) MinTopologicalSort() ([]int, error) {
 	}
 
 	return order, nil
+}
+
+// DjikstraArray uses array for queue and is O(N^2)
+func (g Graph) DjikstraArray(source int) slice.SliceInt {
+	visited := intset.New(g.N)
+
+	distances := slice.NewSliceInt(g.N)
+	for v := range distances {
+		if v == source {
+			continue
+		}
+		distances[v] = integer.MAX
+	}
+
+	current := source
+	for {
+		for _, edge := range g.OutEdges[current] {
+			if visited.Contains(edge.To) {
+				continue
+			}
+			distance := distances[current] + edge.Weight
+			if distances[edge.To] > distance {
+				distances[edge.To] = distance
+			}
+		}
+		visited.Add(current)
+
+		imin := -1
+		for i := range distances {
+			if visited.Contains(i) {
+				continue
+			}
+			if imin == -1 || distances[i] < distances[imin] {
+				imin = i
+			}
+		}
+
+		if imin == -1 || distances[imin] == integer.MAX {
+			break
+		}
+
+		current = imin
+	}
+
+	return distances
 }
