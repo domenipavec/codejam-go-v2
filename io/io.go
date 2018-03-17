@@ -7,9 +7,11 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"os/user"
 	"path"
 	"path/filepath"
+	"runtime/pprof"
 	"strconv"
 	"strings"
 	"time"
@@ -28,6 +30,7 @@ type Parser struct {
 	compareOutput *CompareOutput
 
 	debugNumber *int
+	profile     *bool
 
 	baseFn    string
 	inputFn   string
@@ -42,6 +45,7 @@ func TestCases(f TestCaseFunc) {
 	parser := Parser{
 		f:           f,
 		debugNumber: flag.Int("d", -1, "Debug output only for this case"),
+		profile:     flag.Bool("p", false, "Run profiler"),
 	}
 
 	inputFileFlag := flag.String("i", "", "Input file")
@@ -145,6 +149,14 @@ func (parser *Parser) ParseFile() {
 		log.SetOutput(ioutil.Discard)
 	}
 
+	if *parser.profile {
+		f, err := os.Create(parser.profileFn)
+		if err != nil {
+			log.Fatalln("Error creating profile file:", err)
+		}
+		pprof.StartCPUProfile(f)
+	}
+
 	startTime := time.Now()
 	for i := 1; i <= T; i++ {
 		if *parser.debugNumber == i {
@@ -156,15 +168,21 @@ func (parser *Parser) ParseFile() {
 			log.SetOutput(ioutil.Discard)
 		}
 	}
+	totalTime := time.Now().Sub(startTime)
+
+	if *parser.profile {
+		parser.printProfile()
+	}
 
 	for key, timer := range parser.output.timers {
 		log.Printf("Timer %s: %v", key, timer.Total)
 	}
-	log.Println("Total time:", time.Now().Sub(startTime))
+	log.Println("Total time:", totalTime)
 }
 
 func (parser *Parser) runTestCase(i int) {
 	warningTimer := time.NewTimer(1 * time.Second)
+	stopProfileTimer := time.NewTimer(10 * time.Second)
 	periodicPrintTicker := time.NewTicker(1 * time.Second)
 
 	doneChan := make(chan bool)
@@ -191,6 +209,11 @@ loop:
 			parser.output.Debug("Long calculation")
 		case <-periodicPrintTicker.C:
 			parser.output.triggerPeriodic()
+		case <-stopProfileTimer.C:
+			if *parser.profile {
+				parser.printProfile()
+				log.Fatalln("Profile finished")
+			}
 		case <-doneChan:
 			break loop
 		}
@@ -198,6 +221,20 @@ loop:
 
 	periodicPrintTicker.Stop()
 	parser.output.resetPeriodic()
+}
+
+func (parser *Parser) printProfile() {
+	pprof.StopCPUProfile()
+	out, err := exec.Command("go", "tool", "pprof", "-top", os.Args[0], parser.profileFn).CombinedOutput()
+	if err != nil {
+		log.Fatalln("Error running profile tool:", err)
+	}
+	parser.output.Debug("CPUProfile:", string(out))
+
+	err = exec.Command("go", "tool", "pprof", "-web", os.Args[0], parser.profileFn).Run()
+	if err != nil {
+		log.Fatalln("Error running profile tool:", err)
+	}
 }
 
 func (parser *Parser) writeChart(i int) {
