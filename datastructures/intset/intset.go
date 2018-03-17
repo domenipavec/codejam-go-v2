@@ -12,7 +12,7 @@ func New(N int) IntSet {
 	}
 }
 
-func (s IntSet) Add(elements ...int) {
+func (s *IntSet) Add(elements ...int) {
 	for _, element := range elements {
 		if !s.data[element] {
 			s.data[element] = true
@@ -21,7 +21,7 @@ func (s IntSet) Add(elements ...int) {
 	}
 }
 
-func (s IntSet) Remove(elements ...int) {
+func (s *IntSet) Remove(elements ...int) {
 	for _, element := range elements {
 		if s.data[element] {
 			s.data[element] = false
