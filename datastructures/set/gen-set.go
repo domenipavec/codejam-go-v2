@@ -37,6 +37,19 @@ func (s SetBool) Contains(element bool) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetBool) Equal(other SetBool) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetByte type
 type SetByte map[byte]struct{}
 
@@ -68,6 +81,19 @@ func (s SetByte) Len() int {
 func (s SetByte) Contains(element byte) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetByte) Equal(other SetByte) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetComplex128 type
@@ -103,6 +129,19 @@ func (s SetComplex128) Contains(element complex128) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetComplex128) Equal(other SetComplex128) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetComplex64 type
 type SetComplex64 map[complex64]struct{}
 
@@ -134,6 +173,19 @@ func (s SetComplex64) Len() int {
 func (s SetComplex64) Contains(element complex64) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetComplex64) Equal(other SetComplex64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetError type
@@ -169,6 +221,19 @@ func (s SetError) Contains(element error) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetError) Equal(other SetError) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetFloat32 type
 type SetFloat32 map[float32]struct{}
 
@@ -200,6 +265,19 @@ func (s SetFloat32) Len() int {
 func (s SetFloat32) Contains(element float32) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetFloat32) Equal(other SetFloat32) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetFloat64 type
@@ -235,6 +313,19 @@ func (s SetFloat64) Contains(element float64) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetFloat64) Equal(other SetFloat64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetInt type
 type SetInt map[int]struct{}
 
@@ -266,6 +357,19 @@ func (s SetInt) Len() int {
 func (s SetInt) Contains(element int) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetInt) Equal(other SetInt) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetInt16 type
@@ -301,6 +405,19 @@ func (s SetInt16) Contains(element int16) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetInt16) Equal(other SetInt16) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetInt32 type
 type SetInt32 map[int32]struct{}
 
@@ -332,6 +449,19 @@ func (s SetInt32) Len() int {
 func (s SetInt32) Contains(element int32) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetInt32) Equal(other SetInt32) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetInt64 type
@@ -367,6 +497,19 @@ func (s SetInt64) Contains(element int64) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetInt64) Equal(other SetInt64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetInt8 type
 type SetInt8 map[int8]struct{}
 
@@ -398,6 +541,19 @@ func (s SetInt8) Len() int {
 func (s SetInt8) Contains(element int8) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetInt8) Equal(other SetInt8) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetRune type
@@ -433,6 +589,19 @@ func (s SetRune) Contains(element rune) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetRune) Equal(other SetRune) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetString type
 type SetString map[string]struct{}
 
@@ -464,6 +633,19 @@ func (s SetString) Len() int {
 func (s SetString) Contains(element string) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetString) Equal(other SetString) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetUint type
@@ -499,6 +681,19 @@ func (s SetUint) Contains(element uint) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetUint) Equal(other SetUint) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetUint16 type
 type SetUint16 map[uint16]struct{}
 
@@ -530,6 +725,19 @@ func (s SetUint16) Len() int {
 func (s SetUint16) Contains(element uint16) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetUint16) Equal(other SetUint16) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetUint32 type
@@ -565,6 +773,19 @@ func (s SetUint32) Contains(element uint32) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetUint32) Equal(other SetUint32) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetUint64 type
 type SetUint64 map[uint64]struct{}
 
@@ -596,6 +817,19 @@ func (s SetUint64) Len() int {
 func (s SetUint64) Contains(element uint64) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetUint64) Equal(other SetUint64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }
 
 // SetUint8 type
@@ -631,6 +865,19 @@ func (s SetUint8) Contains(element uint8) bool {
 	return ok
 }
 
+// Equal are sets equal
+func (s SetUint8) Equal(other SetUint8) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
+
 // SetUintptr type
 type SetUintptr map[uintptr]struct{}
 
@@ -662,4 +909,17 @@ func (s SetUintptr) Len() int {
 func (s SetUintptr) Contains(element uintptr) bool {
 	_, ok := s[element]
 	return ok
+}
+
+// Equal are sets equal
+func (s SetUintptr) Equal(other SetUintptr) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
 }

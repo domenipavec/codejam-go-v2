@@ -66,3 +66,16 @@ func (s MultiSetValueType) Len() int {
 func (s MultiSetValueType) Count(element ValueType) int {
 	return s[element]
 }
+
+// Equal are multisets equal
+func (s MultiSetValueType) Equal(other MultiSetValueType) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}

@@ -64,6 +64,19 @@ func (s MultiSetBool) Count(element bool) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetBool) Equal(other MultiSetBool) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetByte type
 type MultiSetByte map[byte]int
 
@@ -122,6 +135,19 @@ func (s MultiSetByte) Len() int {
 // Count number of element in set
 func (s MultiSetByte) Count(element byte) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetByte) Equal(other MultiSetByte) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetComplex128 type
@@ -184,6 +210,19 @@ func (s MultiSetComplex128) Count(element complex128) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetComplex128) Equal(other MultiSetComplex128) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetComplex64 type
 type MultiSetComplex64 map[complex64]int
 
@@ -242,6 +281,19 @@ func (s MultiSetComplex64) Len() int {
 // Count number of element in set
 func (s MultiSetComplex64) Count(element complex64) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetComplex64) Equal(other MultiSetComplex64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetError type
@@ -304,6 +356,19 @@ func (s MultiSetError) Count(element error) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetError) Equal(other MultiSetError) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetFloat32 type
 type MultiSetFloat32 map[float32]int
 
@@ -362,6 +427,19 @@ func (s MultiSetFloat32) Len() int {
 // Count number of element in set
 func (s MultiSetFloat32) Count(element float32) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetFloat32) Equal(other MultiSetFloat32) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetFloat64 type
@@ -424,6 +502,19 @@ func (s MultiSetFloat64) Count(element float64) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetFloat64) Equal(other MultiSetFloat64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetInt type
 type MultiSetInt map[int]int
 
@@ -482,6 +573,19 @@ func (s MultiSetInt) Len() int {
 // Count number of element in set
 func (s MultiSetInt) Count(element int) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetInt) Equal(other MultiSetInt) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetInt16 type
@@ -544,6 +648,19 @@ func (s MultiSetInt16) Count(element int16) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetInt16) Equal(other MultiSetInt16) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetInt32 type
 type MultiSetInt32 map[int32]int
 
@@ -602,6 +719,19 @@ func (s MultiSetInt32) Len() int {
 // Count number of element in set
 func (s MultiSetInt32) Count(element int32) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetInt32) Equal(other MultiSetInt32) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetInt64 type
@@ -664,6 +794,19 @@ func (s MultiSetInt64) Count(element int64) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetInt64) Equal(other MultiSetInt64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetInt8 type
 type MultiSetInt8 map[int8]int
 
@@ -722,6 +865,19 @@ func (s MultiSetInt8) Len() int {
 // Count number of element in set
 func (s MultiSetInt8) Count(element int8) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetInt8) Equal(other MultiSetInt8) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetRune type
@@ -784,6 +940,19 @@ func (s MultiSetRune) Count(element rune) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetRune) Equal(other MultiSetRune) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetString type
 type MultiSetString map[string]int
 
@@ -842,6 +1011,19 @@ func (s MultiSetString) Len() int {
 // Count number of element in set
 func (s MultiSetString) Count(element string) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetString) Equal(other MultiSetString) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetUint type
@@ -904,6 +1086,19 @@ func (s MultiSetUint) Count(element uint) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetUint) Equal(other MultiSetUint) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetUint16 type
 type MultiSetUint16 map[uint16]int
 
@@ -962,6 +1157,19 @@ func (s MultiSetUint16) Len() int {
 // Count number of element in set
 func (s MultiSetUint16) Count(element uint16) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetUint16) Equal(other MultiSetUint16) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetUint32 type
@@ -1024,6 +1232,19 @@ func (s MultiSetUint32) Count(element uint32) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetUint32) Equal(other MultiSetUint32) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetUint64 type
 type MultiSetUint64 map[uint64]int
 
@@ -1082,6 +1303,19 @@ func (s MultiSetUint64) Len() int {
 // Count number of element in set
 func (s MultiSetUint64) Count(element uint64) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetUint64) Equal(other MultiSetUint64) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }
 
 // MultiSetUint8 type
@@ -1144,6 +1378,19 @@ func (s MultiSetUint8) Count(element uint8) int {
 	return s[element]
 }
 
+// Equal are multisets equal
+func (s MultiSetUint8) Equal(other MultiSetUint8) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
+}
+
 // MultiSetUintptr type
 type MultiSetUintptr map[uintptr]int
 
@@ -1202,4 +1449,17 @@ func (s MultiSetUintptr) Len() int {
 // Count number of element in set
 func (s MultiSetUintptr) Count(element uintptr) int {
 	return s[element]
+}
+
+// Equal are multisets equal
+func (s MultiSetUintptr) Equal(other MultiSetUintptr) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element, count := range s {
+		if other.Count(element) != count {
+			return false
+		}
+	}
+	return true
 }

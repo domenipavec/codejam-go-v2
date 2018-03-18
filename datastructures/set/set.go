@@ -39,3 +39,16 @@ func (s SetValueType) Contains(element ValueType) bool {
 	_, ok := s[element]
 	return ok
 }
+
+// Equal are sets equal
+func (s SetValueType) Equal(other SetValueType) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	for element := range s {
+		if !other.Contains(element) {
+			return false
+		}
+	}
+	return true
+}
