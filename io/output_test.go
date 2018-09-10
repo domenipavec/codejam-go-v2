@@ -9,7 +9,7 @@ import (
 
 func TestOutput(t *testing.T) {
 	b := &bytes.Buffer{}
-	o := newOutput(b)
+	o := newOutput(b, false)
 	o.init(nil, 3)
 
 	o.Print("test")

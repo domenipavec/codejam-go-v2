@@ -29,6 +29,8 @@ type Parser struct {
 	output        *Output
 	compareOutput *CompareOutput
 
+	interactive bool
+
 	debugNumber *int
 	profile     *bool
 
@@ -39,7 +41,7 @@ type Parser struct {
 	profileFn string
 }
 
-func TestCases(f TestCaseFunc) {
+func NewParser(f TestCaseFunc) Parser {
 	log.SetFlags(0)
 
 	parser := Parser{
@@ -47,6 +49,11 @@ func TestCases(f TestCaseFunc) {
 		debugNumber: flag.Int("d", -1, "Debug output only for this case"),
 		profile:     flag.Bool("p", false, "Run profiler"),
 	}
+	return parser
+}
+
+func TestCases(f TestCaseFunc) {
+	parser := NewParser(f)
 
 	inputFileFlag := flag.String("i", "", "Input file")
 
@@ -100,6 +107,12 @@ func TestCases(f TestCaseFunc) {
 	parser.ParseFile()
 }
 
+func TestCasesInteractive(f TestCaseFunc) {
+	parser := NewParser(f)
+	parser.interactive = true
+	parser.Parse(os.Stdin, os.Stdout)
+}
+
 func (parser *Parser) SetFn(inputFn string) {
 	parser.inputFn = inputFn
 	parser.baseFn = strings.TrimSuffix(inputFn, ".in")
@@ -126,10 +139,14 @@ func (parser *Parser) ParseFile() {
 		outputWriter = io.MultiWriter(outputF, os.Stdout)
 	}
 
-	scanner := bufio.NewScanner(inputF)
+	parser.Parse(inputF, outputWriter)
+}
+
+func (parser *Parser) Parse(input io.Reader, output io.Writer) {
+	scanner := bufio.NewScanner(input)
 	scanner.Split(bufio.ScanWords)
 
-	parser.output = newOutput(outputWriter)
+	parser.output = newOutput(output, !parser.interactive)
 	parser.input = newInput(scanner)
 
 	parser.compareOutput = nil
